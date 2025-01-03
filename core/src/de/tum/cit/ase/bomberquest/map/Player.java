@@ -70,8 +70,8 @@ public class Player implements Drawable {
         // Make the player move in a circle with radius 2 tiles
         // You can change this to make the player move differently, e.g. in response to user input.
         // See Gdx.input.isKeyPressed() for keyboard input
-        float xVelocity = (float) Math.sin(this.elapsedTime) * 2; //original
-        float yVelocity = (float) Math.cos(this.elapsedTime) * 2;//original
+        float xVelocity = (float) Math.sin(this.elapsedTime) * 2;
+        float yVelocity = (float) Math.cos(this.elapsedTime) * 2;
         float inputSpeed = 2.0f;
         if (Gdx.input.isKeyPressed(LEFT)) {
             xVelocity -= inputSpeed;
@@ -87,8 +87,21 @@ public class Player implements Drawable {
         }else{
            yVelocity = 0.0f;
         }
-        float roll = (float)Math.atan2(yVelocity,xVelocity); //转体
         this.hitbox.setLinearVelocity(xVelocity, yVelocity);
+        // 检查Y轴速度是否大于X轴速度的绝对值
+        if (Math.abs(yVelocity) > Math.abs(xVelocity)) {
+            if (yVelocity > 0) {
+                 Animations.CHARACTER_WALK_UP.getKeyFrame(this.elapsedTime, true);
+            } else {
+                Animations.CHARACTER_WALK_DOWN.getKeyFrame(this.elapsedTime, true);
+            }
+        } else {
+            if (xVelocity > 0) {
+                 Animations.CHARACTER_WALK_RIGHT.getKeyFrame(this.elapsedTime, true);
+            } else {
+                 Animations.CHARACTER_WALK_LEFT.getKeyFrame(this.elapsedTime, true);
+            }
+        }
     }
 
     @Override
