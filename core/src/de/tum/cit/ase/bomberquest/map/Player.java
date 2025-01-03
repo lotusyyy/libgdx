@@ -23,6 +23,10 @@ public class Player implements Drawable {
     
     /** The Box2D hitbox of the player, used for position and collision detection. */
     private final Body hitbox;
+
+    // 添加xVelocity和yVelocity作为成员变量
+    private float xVelocity = 0;
+    private float yVelocity = 0;
     
     public Player(World world, float x, float y) {
         this.hitbox = createHitbox(world, x, y);
@@ -88,26 +92,24 @@ public class Player implements Drawable {
            yVelocity = 0.0f;
         }
         this.hitbox.setLinearVelocity(xVelocity, yVelocity);
-        // 检查Y轴速度是否大于X轴速度的绝对值
-        if (Math.abs(yVelocity) > Math.abs(xVelocity)) {
-            if (yVelocity > 0) {
-                 Animations.CHARACTER_WALK_UP.getKeyFrame(this.elapsedTime, true);
-            } else {
-                Animations.CHARACTER_WALK_DOWN.getKeyFrame(this.elapsedTime, true);
-            }
-        } else {
-            if (xVelocity > 0) {
-                 Animations.CHARACTER_WALK_RIGHT.getKeyFrame(this.elapsedTime, true);
-            } else {
-                 Animations.CHARACTER_WALK_LEFT.getKeyFrame(this.elapsedTime, true);
-            }
-        }
     }
 
     @Override
     public TextureRegion getCurrentAppearance() {
-        // Get the frame of the walk down animation that corresponds to the current time.
-        return Animations.CHARACTER_WALK_DOWN.getKeyFrame(this.elapsedTime, true);
+        // 使用xVelocity和yVelocity决定使用哪个动画
+        if (Math.abs(yVelocity) > Math.abs(xVelocity)) {
+            if (yVelocity > 0) {
+                return Animations.CHARACTER_WALK_UP.getKeyFrame(this.elapsedTime, true);
+            } else {
+                return Animations.CHARACTER_WALK_DOWN.getKeyFrame(this.elapsedTime, true);
+            }
+        } else {
+            if (xVelocity > 0) {
+                return Animations.CHARACTER_WALK_RIGHT.getKeyFrame(this.elapsedTime, true);
+            } else {
+                return Animations.CHARACTER_WALK_LEFT.getKeyFrame(this.elapsedTime, true);
+            }
+        }
     }
     
     @Override
