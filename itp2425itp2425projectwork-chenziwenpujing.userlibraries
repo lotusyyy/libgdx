@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<eclipse-userlibraries>
+  <library name="Gradle: com.badlogicgames.gdx:gdx-backend-lwjgl3:1.13.0">
+    <archive path="/Users/selinapu/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-backend-lwjgl3/1.13.0/bd205dae964d9e06432a14bc29de98ae22b0e342/gdx-backend-lwjgl3-1.13.0.jar" />
+  </library>
+  <library name="Gradle: com.badlogicgames.gdx:gdx-platform:natives-desktop:1.13.0">
+    <archive path="/Users/selinapu/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-platform/1.13.0/86a8c9c55b62d5ea3a6532d25f3afa8314f69e78/gdx-platform-1.13.0-natives-desktop.jar" />
+  </library>
+  <library name="Gradle: com.badlogicgames.gdx:gdx-freetype-platform:natives-desktop:1.13.0">
+    <archive path="/Users/selinapu/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-freetype-platform/1.13.0/8e2e4275e14852d8e7cf2ecac178ab7667fd3729/gdx-freetype-platform-1.13.0-natives-desktop.jar" />
+  </library>
+  <library name="Gradle: com.badlogicgames.gdx:gdx-box2d-platform:natives-desktop:1.13.0">
+    <archive path="/Users/selinapu/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-box2d-platform/1.13.0/ba92923a9b6b75a20212e8ca215fa22f93810da8/gdx-box2d-platform-1.13.0-natives-desktop.jar" />
+  </library>
+  <library name="Gradle: games.spooky.gdx:gdx-nativefilechooser-desktop-lwjgl:2.3.0">
+    <archive path="/Users/selinapu/.gradle/caches/modules-2/files-2.1/games.spooky.gdx/gdx-nativefilechooser-desktop-lwjgl/2.3.0/106e21f7ef9ebc209b2ab01a4bc31f21c598feb3/gdx-nativefilechooser-desktop-lwjgl-2.3.0.jar" />
+  </library>
+  <library name="Gradle: com.badlogicgames.gdx:gdx:1.13.0">
+    <archive path="/Users/selinapu/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx/1.13.0/5ad34f11004a70f4f2c55456461ab1dbf438eeea/gdx-1.13.0.jar" />
+  </library>
+  <library name="Gradle: org.lwjgl:lwjgl-glfw:3.3.4">
+    <archive path="/Users/selinapu/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-glfw/3.3.4/7e46ecdec85db8738053cfde1414352cd62dab74/lwjgl-glfw-3.3.4.jar" />
+  </library>
+  <library name="Gradle: org.lwjgl:lwjgl-glfw:natives-linux:3.3.4">
+    <archive path="/Users/selinapu/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-glfw/3.3.4/91e3d4b56d6d1369ef107b9d7801c9f38125c590/lwjgl-glfw-3.3.4-natives-linux.jar" />
+  </library>
+  <library name="Gradle: org.lwjgl:lwjgl-glfw:natives-linux-arm32:3.3.4">
+    <archive path="/Users/selinapu/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-glfw/3.3.4/449b8e4b7cf5c91b307605196230be84b1c51e9c/lwjgl-glfw-3.3.4-natives-linux-arm32.jar" />
+  </library>
+  <library name="Gradle: org.lwjgl:lwjgl-glfw:natives-linux-arm64:3.3.4">
+    <archive path="/Users/selinapu/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-glfw/3.3.4/6ed16dab2ee0d1325bcc5c0fdeabf53d2695fce2/lwjgl-glfw-3.3.4-natives-linux-arm64.jar" />
+  </library>
+  <library name="Gradle: org.lwjgl:lwjgl-glfw:natives-linux-riscv64:3.3.4">
+    <archive path="/Users/selinapu/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-glfw/3.3.4/9582481036b6fb762c3f791e2ed26128152a1cec/lwjgl-glfw-3.3.4-natives-linux-riscv64.jar" />
+  </library>
+  <library name="Gradle: org.lwjgl:lwjgl-glfw:natives-macos:3.3.4">
+    <archive path="/Users/selinapu/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-glfw/3.3.4/753fa860987242ceefa990a6062a18dff4908a33/lwjgl-glfw-3.3.4-natives-macos.jar" />
+  </library>
+  <library name="Gradle: org.lwjgl:lwjgl-glfw:natives-macos-arm64:3.3.4">
+    <archive path="/Users/selinapu/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-glfw/3.3.4/4c358e983516fb6318b76c892ac35b79e8f2f8d9/lwjgl-glfw-3.3.4-natives-macos-arm64.jar" />
+  </library>
+  <library name="Gradle: org.lwjgl:lwjgl-glfw:natives-windows:3.3.4">
+    <archive path="/Users/selinapu/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-glfw/3.3.4/370ef92d15819a123c643dd2b0fc3a2d40bb263c/lwjgl-glfw-3.3.4-natives-windows.jar" />
+  </library>
+  <library name="Gradle: org.lwjgl:lwjgl-glfw:natives-windows-x86:3.3.4">
+    <archive path="/Users/selinapu/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-glfw/3.3.4/3dbc102949a66255b95a31c2471f4c6a22b22737/lwjgl-glfw-3.3.4-natives-windows-x86.jar" />
+  </library>
+  <library name="Gradle: org.lwjgl:lwjgl-jemalloc:3.3.4">
+    <archive path="/Users/selinapu/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-jemalloc/3.3.4/e3f5dcb8e13f3a5ed3f740fd30a114cee2a80bc4/lwjgl-jemalloc-3.3.4.jar" />
+  </library>
+  <library name="Gradle: org.lwjgl:lwjgl-jemalloc:natives-linux:3.3.4">
+    <archive path="/Users/selinapu/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-jemalloc/3.3.4/4cf2f56192436b563f30524a5b389f3b37cae4af/lwjgl-jemalloc-3.3.4-natives-linux.jar" />
+  </library>
+  <library name="Gradle: org.lwjgl:lwjgl-jemalloc:natives-linux-arm32:3.3.4">
+    <archive path="/Users/selinapu/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-jemalloc/3.3.4/ff12080e919f34a9fb9dae32c26b36048d1f3393/lwjgl-jemalloc-3.3.4-natives-linux-arm32.jar" />
+  </library>
+  <library name="Gradle: org.lwjgl:lwjgl-jemalloc:natives-linux-arm64:3.3.4">
+    <archive path="/Users/selinapu/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-jemalloc/3.3.4/ebb67e23b0b83a8ee30f7b17eba6f289a43fd3f5/lwjgl-jemalloc-3.3.4-natives-linux-arm64.jar" />
+  </library>
+  <library name="Gradle: org.lwjgl:lwjgl-jemalloc:natives-linux-riscv64:3.3.4">
+    <archive path="/Users/selinapu/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-jemalloc/3.3.4/6c5d38aad1dbd1c4945bcbe86640e616ceb9588f/lwjgl-jemalloc-3.3.4-natives-linux-riscv64.jar" />
+  </library>
+  <library name="Gradle: org.lwjgl:lwjgl-jemalloc:natives-macos:3.3.4">
+    <archive path="/Users/selinapu/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-jemalloc/3.3.4/bc99a9862de25a9bee2e340a2d404cd8933c5299/lwjgl-jemalloc-3.3.4-natives-macos.jar" />
+  </library>
+  <library name="Gradle: org.lwjgl:lwjgl-jemalloc:natives-macos-arm64:3.3.4">
+    <archive path="/Users/selinapu/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-jemalloc/3.3.4/f7a7d32a5ec6b5f20756e8ea9aa54ec7e5401c4f/lwjgl-jemalloc-3.3.4-natives-macos-arm64.jar" />
+  </library>
+  <library name="Gradle: org.lwjgl:lwjgl-jemalloc:natives-windows:3.3.4">
+    <archive path="/Users/selinapu/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-jemalloc/3.3.4/4fa19a3d8262e2d73d9632b70b753a2b67552951/lwjgl-jemalloc-3.3.4-natives-windows.jar" />
+  </library>
+  <library name="Gradle: org.lwjgl:lwjgl-jemalloc:natives-windows-x86:3.3.4">
+    <archive path="/Users/selinapu/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-jemalloc/3.3.4/54087cafb7c5e0d5dc440d1aa61fae9a7b384785/lwjgl-jemalloc-3.3.4-natives-windows-x86.jar" />
+  </library>
+  <library name="Gradle: org.lwjgl:lwjgl-openal:3.3.4">
+    <archive path="/Users/selinapu/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-openal/3.3.4/9b74d3ea380c83353d42af43ad9659e04dabe84a/lwjgl-openal-3.3.4.jar" />
+  </library>
+  <library name="Gradle: org.lwjgl:lwjgl-openal:natives-linux:3.3.4">
+    <archive path="/Users/selinapu/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-openal/3.3.4/45189277b5ac64b849de7293e8b1ef2cf2082102/lwjgl-openal-3.3.4-natives-linux.jar" />
+  </library>
+  <library name="Gradle: org.lwjgl:lwjgl-openal:natives-linux-arm32:3.3.4">
+    <archive path="/Users/selinapu/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-openal/3.3.4/2f9f237a80067a62ea6b5d2ca8e6ba7f09bdcdc6/lwjgl-openal-3.3.4-natives-linux-arm32.jar" />
+  </library>
+  <library name="Gradle: org.lwjgl:lwjgl-openal:natives-linux-arm64:3.3.4">
+    <archive path="/Users/selinapu/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-openal/3.3.4/81d51b1e4c0094d2888bd2fe8452af9afbf9838e/lwjgl-openal-3.3.4-natives-linux-arm64.jar" />
+  </library>
+  <library name="Gradle: org.lwjgl:lwjgl-openal:natives-linux-riscv64:3.3.4">
+    <archive path="/Users/selinapu/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-openal/3.3.4/74c5ddf47ad6bee41348bbb0735008694b5315af/lwjgl-openal-3.3.4-natives-linux-riscv64.jar" />
+  </library>
+  <library name="Gradle: org.lwjgl:lwjgl-openal:natives-macos:3.3.4">
+    <archive path="/Users/selinapu/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-openal/3.3.4/e2adb6049c1931bdebd98844bca17b9ac2758447/lwjgl-openal-3.3.4-natives-macos.jar" />
+  </library>
+  <library name="Gradle: org.lwjgl:lwjgl-openal:natives-macos-arm64:3.3.4">
+    <archive path="/Users/selinapu/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-openal/3.3.4/a5dd94302fe588b081a5e5beecbfc4584a109c97/lwjgl-openal-3.3.4-natives-macos-arm64.jar" />
+  </library>
+  <library name="Gradle: org.lwjgl:lwjgl-openal:natives-windows:3.3.4">
+    <archive path="/Users/selinapu/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-openal/3.3.4/c4de8af803aacda71044418095a71cd63b569a15/lwjgl-openal-3.3.4-natives-windows.jar" />
+  </library>
+  <library name="Gradle: org.lwjgl:lwjgl-openal:natives-windows-x86:3.3.4">
+    <archive path="/Users/selinapu/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-openal/3.3.4/35ccf6e634931b2f980bd232def11f81e66484a6/lwjgl-openal-3.3.4-natives-windows-x86.jar" />
+  </library>
+  <library name="Gradle: org.lwjgl:lwjgl-opengl:3.3.4">
+    <archive path="/Users/selinapu/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-opengl/3.3.4/2852ac7d9f6fc71349f1ce28e2708ff1977f18af/lwjgl-opengl-3.3.4.jar" />
+  </library>
+  <library name="Gradle: org.lwjgl:lwjgl-opengl:natives-linux:3.3.4">
+    <archive path="/Users/selinapu/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-opengl/3.3.4/789df76d2e3da55349d858dfb81442149af7c7f4/lwjgl-opengl-3.3.4-natives-linux.jar" />
+  </library>
+  <library name="Gradle: org.lwjgl:lwjgl-opengl:natives-linux-arm32:3.3.4">
+    <archive path="/Users/selinapu/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-opengl/3.3.4/34d3574cdb6acaf41e809f935d8917dbb65ca5e6/lwjgl-opengl-3.3.4-natives-linux-arm32.jar" />
+  </library>
+  <library name="Gradle: org.lwjgl:lwjgl-opengl:natives-linux-arm64:3.3.4">
+    <archive path="/Users/selinapu/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-opengl/3.3.4/26dfff75b853db7c5f1f37397c6f4899a4e24416/lwjgl-opengl-3.3.4-natives-linux-arm64.jar" />
+  </library>
+  <library name="Gradle: org.lwjgl:lwjgl-opengl:natives-linux-riscv64:3.3.4">
+    <archive path="/Users/selinapu/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-opengl/3.3.4/6ea07b47dd91af8f3ee4a24ddb3cbf086d157a4e/lwjgl-opengl-3.3.4-natives-linux-riscv64.jar" />
+  </library>
+  <library name="Gradle: org.lwjgl:lwjgl-opengl:natives-macos:3.3.4">
+    <archive path="/Users/selinapu/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-opengl/3.3.4/ae0dd9d292744114f54d268a98cf1cd748b9994d/lwjgl-opengl-3.3.4-natives-macos.jar" />
+  </library>
+  <library name="Gradle: org.lwjgl:lwjgl-opengl:natives-macos-arm64:3.3.4">
+    <archive path="/Users/selinapu/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-opengl/3.3.4/832e7deef981577ee7aeb3b9e1c74bc0e5d26cce/lwjgl-opengl-3.3.4-natives-macos-arm64.jar" />
+  </library>
+  <library name="Gradle: org.lwjgl:lwjgl-opengl:natives-windows:3.3.4">
+    <archive path="/Users/selinapu/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-opengl/3.3.4/f7ca4e75573a9ce83075bd86bc8a3e49ff106696/lwjgl-opengl-3.3.4-natives-windows.jar" />
+  </library>
+  <library name="Gradle: org.lwjgl:lwjgl-opengl:natives-windows-x86:3.3.4">
+    <archive path="/Users/selinapu/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-opengl/3.3.4/b6d5c724826bac85640a6049f0a1ddf431181126/lwjgl-opengl-3.3.4-natives-windows-x86.jar" />
+  </library>
+  <library name="Gradle: org.lwjgl:lwjgl-stb:3.3.4">
+    <archive path="/Users/selinapu/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-stb/3.3.4/5821735d5ef23f6da8542887344e57eb181b7cac/lwjgl-stb-3.3.4.jar" />
+  </library>
+  <library name="Gradle: org.lwjgl:lwjgl-stb:natives-linux:3.3.4">
+    <archive path="/Users/selinapu/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-stb/3.3.4/dfc129f009495e6effe8a023d7c3f9cf519e86e3/lwjgl-stb-3.3.4-natives-linux.jar" />
+  </library>
+  <library name="Gradle: org.lwjgl:lwjgl-stb:natives-linux-arm32:3.3.4">
+    <archive path="/Users/selinapu/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-stb/3.3.4/d0df615de25e86afb4fec1ff20410a45797b5954/lwjgl-stb-3.3.4-natives-linux-arm32.jar" />
+  </library>
+  <library name="Gradle: org.lwjgl:lwjgl-stb:natives-linux-arm64:3.3.4">
+    <archive path="/Users/selinapu/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-stb/3.3.4/8a3459c48b72822997cb5b417cd8a4fd7766aecb/lwjgl-stb-3.3.4-natives-linux-arm64.jar" />
+  </library>
+  <library name="Gradle: org.lwjgl:lwjgl-stb:natives-linux-riscv64:3.3.4">
+    <archive path="/Users/selinapu/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-stb/3.3.4/502804ee61eb7adb30bbb5e4459899f9a0cb23cf/lwjgl-stb-3.3.4-natives-linux-riscv64.jar" />
+  </library>
+  <library name="Gradle: org.lwjgl:lwjgl-stb:natives-macos:3.3.4">
+    <archive path="/Users/selinapu/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-stb/3.3.4/7f4d84292e503b155d9c251fdbdf5c3a8ec0545/lwjgl-stb-3.3.4-natives-macos.jar" />
+  </library>
+  <library name="Gradle: org.lwjgl:lwjgl-stb:natives-macos-arm64:3.3.4">
+    <archive path="/Users/selinapu/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-stb/3.3.4/42ce7e0be333378860b1aa9c0904478ee854a003/lwjgl-stb-3.3.4-natives-macos-arm64.jar" />
+  </library>
+  <library name="Gradle: org.lwjgl:lwjgl-stb:natives-windows:3.3.4">
+    <archive path="/Users/selinapu/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-stb/3.3.4/8310e565463ec8d369528e8b26a9b1518d079a01/lwjgl-stb-3.3.4-natives-windows.jar" />
+  </library>
+  <library name="Gradle: org.lwjgl:lwjgl-stb:natives-windows-x86:3.3.4">
+    <archive path="/Users/selinapu/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-stb/3.3.4/d09beab94b973d0d919b1ceb3e057508c1f203f8/lwjgl-stb-3.3.4-natives-windows-x86.jar" />
+  </library>
+  <library name="Gradle: org.lwjgl:lwjgl:3.3.4">
+    <archive path="/Users/selinapu/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl/3.3.4/b86c3e4832426e8a6b466013b7cb34b40e9ce956/lwjgl-3.3.4.jar" />
+  </library>
+  <library name="Gradle: org.lwjgl:lwjgl:natives-linux:3.3.4">
+    <archive path="/Users/selinapu/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl/3.3.4/a7ccba1d3f2fef214943e74335a80cc65d04e49/lwjgl-3.3.4-natives-linux.jar" />
+  </library>
+  <library name="Gradle: org.lwjgl:lwjgl:natives-linux-arm32:3.3.4">
+    <archive path="/Users/selinapu/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl/3.3.4/da1e9d39555144fd0445e542c6f57abb199d7e79/lwjgl-3.3.4-natives-linux-arm32.jar" />
+  </library>
+  <library name="Gradle: org.lwjgl:lwjgl:natives-linux-arm64:3.3.4">
+    <archive path="/Users/selinapu/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl/3.3.4/620ead288ea92391f405003bfefcdef4588aa856/lwjgl-3.3.4-natives-linux-arm64.jar" />
+  </library>
+  <library name="Gradle: org.lwjgl:lwjgl:natives-linux-riscv64:3.3.4">
+    <archive path="/Users/selinapu/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl/3.3.4/3ce36a5c5e6feb61bad2ea1426352482e04c6db1/lwjgl-3.3.4-natives-linux-riscv64.jar" />
+  </library>
+  <library name="Gradle: org.lwjgl:lwjgl:natives-macos:3.3.4">
+    <archive path="/Users/selinapu/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl/3.3.4/f952bb0894c946445942431de2e311feee635c00/lwjgl-3.3.4-natives-macos.jar" />
+  </library>
+  <library name="Gradle: org.lwjgl:lwjgl:natives-macos-arm64:3.3.4">
+    <archive path="/Users/selinapu/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl/3.3.4/d12785da7cdca4921603b5dd83f712f5cdba3fc4/lwjgl-3.3.4-natives-macos-arm64.jar" />
+  </library>
+  <library name="Gradle: org.lwjgl:lwjgl:natives-windows:3.3.4">
+    <archive path="/Users/selinapu/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl/3.3.4/dd0927c1348cdcd9573fa24b7278ec1ac2bb0a76/lwjgl-3.3.4-natives-windows.jar" />
+  </library>
+  <library name="Gradle: org.lwjgl:lwjgl:natives-windows-x86:3.3.4">
+    <archive path="/Users/selinapu/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl/3.3.4/4da2cf3d17e4f8c654f71b0ce003712e540c1a9f/lwjgl-3.3.4-natives-windows-x86.jar" />
+  </library>
+  <library name="Gradle: com.badlogicgames.jlayer:jlayer:1.0.1-gdx">
+    <archive path="/Users/selinapu/.gradle/caches/modules-2/files-2.1/com.badlogicgames.jlayer/jlayer/1.0.1-gdx/7cca83cec5c1b2f011362f4d85aabd71a73b049d/jlayer-1.0.1-gdx.jar" />
+  </library>
+  <library name="Gradle: org.jcraft:jorbis:0.0.17">
+    <archive path="/Users/selinapu/.gradle/caches/modules-2/files-2.1/org.jcraft/jorbis/0.0.17/8872d22b293e8f5d7d56ff92be966e6dc28ebdc6/jorbis-0.0.17.jar" />
+  </library>
+  <library name="Gradle: com.badlogicgames.gdx:gdx-freetype:1.13.0">
+    <archive path="/Users/selinapu/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-freetype/1.13.0/283b1d86af06bff6dc4b33523d98fe7f44c9dcaa/gdx-freetype-1.13.0.jar" />
+  </library>
+  <library name="Gradle: com.badlogicgames.gdx:gdx-box2d:1.13.0">
+    <archive path="/Users/selinapu/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-box2d/1.13.0/4e3dec7944c9f1972a6628922b54390a4f4dea44/gdx-box2d-1.13.0.jar" />
+  </library>
+  <library name="Gradle: games.spooky.gdx:gdx-nativefilechooser:2.3.0">
+    <archive path="/Users/selinapu/.gradle/caches/modules-2/files-2.1/games.spooky.gdx/gdx-nativefilechooser/2.3.0/e025ca234c2c280b7a8ef6f9c6275debc195bb47/gdx-nativefilechooser-2.3.0.jar" />
+  </library>
+  <library name="Gradle: org.lwjgl:lwjgl-nfd:3.3.1">
+    <archive path="/Users/selinapu/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-nfd/3.3.1/622318116996ddcff449b46cb38f0fdee39b8ac3/lwjgl-nfd-3.3.1.jar" />
+  </library>
+  <library name="Gradle: org.lwjgl:lwjgl-nfd:natives-linux:3.3.1">
+    <archive path="/Users/selinapu/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-nfd/3.3.1/2e007667e04ed3281152ae5c6e677fb1c2211691/lwjgl-nfd-3.3.1-natives-linux.jar" />
+  </library>
+  <library name="Gradle: org.lwjgl:lwjgl-nfd:natives-linux-arm32:3.3.1">
+    <archive path="/Users/selinapu/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-nfd/3.3.1/b3e04e317f55dd738d8a345cdafd15b39f85a2ea/lwjgl-nfd-3.3.1-natives-linux-arm32.jar" />
+  </library>
+  <library name="Gradle: org.lwjgl:lwjgl-nfd:natives-linux-arm64:3.3.1">
+    <archive path="/Users/selinapu/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-nfd/3.3.1/f41dc62336f7ee4ab35705cfa440cc903d199165/lwjgl-nfd-3.3.1-natives-linux-arm64.jar" />
+  </library>
+  <library name="Gradle: org.lwjgl:lwjgl-nfd:natives-macos:3.3.1">
+    <archive path="/Users/selinapu/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-nfd/3.3.1/589d2ffc6cbaad100af363afa31f870299198da1/lwjgl-nfd-3.3.1-natives-macos.jar" />
+  </library>
+  <library name="Gradle: org.lwjgl:lwjgl-nfd:natives-macos-arm64:3.3.1">
+    <archive path="/Users/selinapu/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-nfd/3.3.1/18b4cb2cccb1755ee193e826b5a58a429cd6433a/lwjgl-nfd-3.3.1-natives-macos-arm64.jar" />
+  </library>
+  <library name="Gradle: org.lwjgl:lwjgl-nfd:natives-windows:3.3.1">
+    <archive path="/Users/selinapu/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-nfd/3.3.1/869fe532a50455e8b2d924f498bfb95f80b41aed/lwjgl-nfd-3.3.1-natives-windows.jar" />
+  </library>
+  <library name="Gradle: org.lwjgl:lwjgl-nfd:natives-windows-arm64:3.3.1">
+    <archive path="/Users/selinapu/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-nfd/3.3.1/6f1a380a9064f55fc8741700872872eb908b6bf3/lwjgl-nfd-3.3.1-natives-windows-arm64.jar" />
+  </library>
+  <library name="Gradle: org.lwjgl:lwjgl-nfd:natives-windows-x86:3.3.1">
+    <archive path="/Users/selinapu/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-nfd/3.3.1/abc71d5ecdc11bc2ce83b682f708b670cfa071f6/lwjgl-nfd-3.3.1-natives-windows-x86.jar" />
+  </library>
+  <library name="Gradle: org.apache.tika:tika-core:2.4.1">
+    <archive path="/Users/selinapu/.gradle/caches/modules-2/files-2.1/org.apache.tika/tika-core/2.4.1/57f4302814e60936e1d2b29550808a1edf30c685/tika-core-2.4.1.jar" />
+  </library>
+  <library name="Gradle: com.badlogicgames.gdx:gdx-jnigen-loader:2.5.2">
+    <archive path="/Users/selinapu/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-jnigen-loader/2.5.2/f35e90affe07c46b4f5e5958a1a4c1820c4890e2/gdx-jnigen-loader-2.5.2.jar" />
+  </library>
+  <library name="Gradle: org.slf4j:slf4j-api:1.7.36">
+    <archive path="/Users/selinapu/.gradle/caches/modules-2/files-2.1/org.slf4j/slf4j-api/1.7.36/6c62681a2f655b49963a5983b8b0950a6120ae14/slf4j-api-1.7.36.jar" />
+  </library>
+  <library name="Gradle: commons-io:commons-io:2.11.0">
+    <archive path="/Users/selinapu/.gradle/caches/modules-2/files-2.1/commons-io/commons-io/2.11.0/a2503f302b11ebde7ebc3df41daebe0e4eea3689/commons-io-2.11.0.jar" />
+  </library>
+</eclipse-userlibraries>
+

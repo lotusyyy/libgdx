@@ -48,12 +48,19 @@ public class GameMap {
     private final Chest chest;
     
     private final Flowers[][] flowers;
+
+    private final Vector2 entrance;//Vector2是二维向量
+    private Vector2 exit;
+    private boolean exitRevealed = false;
     
     public GameMap(BomberQuestGame game) {
         this.game = game;
         this.world = new World(Vector2.Zero, true);
         // Create a player with initial position (1, 3)
-        this.player = new Player(this.world, 1, 3);
+        this.player = new Player(this.world, 1, 3);//入口位置
+        this.entrance = new Vector2(1,3);//保存入口位置
+        this.exit = new Vector2(5,5);//暂定，需要destructive wall设置
+        this.exitRevealed = false;
         // Create a chest in the middle of the map
         this.chest = new Chest(world, 3, 3);
         // Create flowers in a 7x7 grid
@@ -85,6 +92,13 @@ public class GameMap {
         while (this.physicsTime >= TIME_STEP) {
             this.world.step(TIME_STEP, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
             this.physicsTime -= TIME_STEP;
+        }
+    }
+
+    //检查出口是否被揭示
+    public void revealExitIfNecessary(int x, int y){
+        if(!exitRevealed && exit.x == x && exit.y ==y){
+            exitRevealed = true;
         }
     }
     

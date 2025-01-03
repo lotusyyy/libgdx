@@ -61,7 +61,7 @@ public class Player implements Drawable {
      * This doesn't actually move the player, but it tells the physics engine how the player should move next frame.
      * @param frameTime the time since the last frame.
      */
-    public void tick(float frameTime) {
+    public void tick(float frameTime) {//更新玩家状态，移动和动画
         this.elapsedTime += frameTime;
         // Make the player move in a circle with radius 2 tiles
         // You can change this to make the player move differently, e.g. in response to user input.
