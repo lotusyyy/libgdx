@@ -23,7 +23,11 @@ public class Player implements Drawable {
     
     /** The Box2D hitbox of the player, used for position and collision detection. */
     private final Body hitbox;
-    
+
+    //新添加两个变量
+    float yVelocity = 0.0f;
+    float xVelocity = 0.0f;
+
     public Player(World world, float x, float y) {
         this.hitbox = createHitbox(world, x, y);
     }
@@ -67,47 +71,54 @@ public class Player implements Drawable {
      */
     public void tick(float frameTime) {//更新玩家状态，移动和动画
         this.elapsedTime += frameTime;
-        // Make the player move in a circle with radius 2 tiles
-        // You can change this to make the player move differently, e.g. in response to user input.
-        // See Gdx.input.isKeyPressed() for keyboard input
-        float xVelocity = (float) Math.sin(this.elapsedTime) * 2;
-        float yVelocity = (float) Math.cos(this.elapsedTime) * 2;
         float inputSpeed = 2.0f;
-        if (Gdx.input.isKeyPressed(LEFT)) {
-            xVelocity -= inputSpeed;
-        }else if (Gdx.input.isKeyPressed(RIGHT)) {
-            xVelocity += inputSpeed;
-        }else{
-           xVelocity = 0.0f;
+
+        // 重置速度
+        xVelocity = 0;
+        yVelocity = 0;
+
+        // 更新速度基于键盘输入
+        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+            xVelocity = -inputSpeed;
+        } else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+            xVelocity = inputSpeed;
         }
-        if (Gdx.input.isKeyPressed(UP)) {
-            yVelocity += inputSpeed;
-        }else if (Gdx.input.isKeyPressed(DOWN)) {
-            yVelocity -= inputSpeed;
-        }else{
-           yVelocity = 0.0f;
+
+        if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
+            yVelocity = inputSpeed;
+        } else if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+            yVelocity = -inputSpeed;
         }
+
+        // 只有当至少有一个方向键被按下时才更新速度
+        if (!Gdx.input.isKeyPressed(Input.Keys.LEFT) && !Gdx.input.isKeyPressed(Input.Keys.RIGHT) &&
+                !Gdx.input.isKeyPressed(Input.Keys.UP) && !Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+            xVelocity = 0;
+            yVelocity = 0;
+        }
+
         this.hitbox.setLinearVelocity(xVelocity, yVelocity);
-        // 检查Y轴速度是否大于X轴速度的绝对值
+    }
+
+    //改动：
+    @Override
+    public TextureRegion getCurrentAppearance() {
         if (Math.abs(yVelocity) > Math.abs(xVelocity)) {
             if (yVelocity > 0) {
-                 Animations.CHARACTER_WALK_UP.getKeyFrame(this.elapsedTime, true);
+                return Animations.CHARACTER_WALK_UP.getKeyFrame(this.elapsedTime, true);
             } else {
-                Animations.CHARACTER_WALK_DOWN.getKeyFrame(this.elapsedTime, true);
+                return Animations.CHARACTER_WALK_DOWN.getKeyFrame(this.elapsedTime, true);
             }
         } else {
             if (xVelocity > 0) {
-                 Animations.CHARACTER_WALK_RIGHT.getKeyFrame(this.elapsedTime, true);
+                return Animations.CHARACTER_WALK_RIGHT.getKeyFrame(this.elapsedTime, true);
+            } else if (xVelocity < 0) {
+                return Animations.CHARACTER_WALK_LEFT.getKeyFrame(this.elapsedTime, true);
             } else {
-                 Animations.CHARACTER_WALK_LEFT.getKeyFrame(this.elapsedTime, true);
+                // Option for when the player is standing still
+                return Animations.CHARACTER_WALK_DOWN.getKeyFrame(this.elapsedTime, true);
             }
         }
-    }
-
-    @Override
-    public TextureRegion getCurrentAppearance() {
-        // Get the frame of the walk down animation that corresponds to the current time.
-        return Animations.CHARACTER_WALK_DOWN.getKeyFrame(this.elapsedTime, true);
     }
     
     @Override
