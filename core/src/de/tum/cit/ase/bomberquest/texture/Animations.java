@@ -13,6 +13,7 @@ public class Animations {
     /**
      * The animation for the character walking down.
      */
+    //上下左右移动player时的动画：
     public static final Animation<TextureRegion> CHARACTER_WALK_DOWN = new Animation<>(0.1f,
             SpriteSheet.CHARACTER.at(1, 1),
             SpriteSheet.CHARACTER.at(1, 2),

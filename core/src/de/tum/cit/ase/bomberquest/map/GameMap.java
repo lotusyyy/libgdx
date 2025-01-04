@@ -49,6 +49,7 @@ public class GameMap {
     
     private final Flowers[][] flowers;
 
+
     private final Vector2 entrance;//Vector2是二维向量
     private Vector2 exit;
     private boolean exitRevealed = false;
