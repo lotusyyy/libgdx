@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.ScreenUtils;
 import de.tum.cit.ase.bomberquest.BomberQuestGame;
 import de.tum.cit.ase.bomberquest.map.Flowers;
+import de.tum.cit.ase.bomberquest.map.Player;
 import de.tum.cit.ase.bomberquest.map.Wall;
 import de.tum.cit.ase.bomberquest.texture.Drawable;
 import de.tum.cit.ase.bomberquest.map.GameMap;
@@ -91,9 +92,18 @@ public class GameScreen implements Screen {
      * Currently, this just centers the camera at the origin.
      */
     private void updateCamera() {
+        Player player = map.getPlayer(); // 获取玩家
+        float playerX = player.getX() * TILE_SIZE_PX * SCALE;
+        float playerY = player.getY() * TILE_SIZE_PX * SCALE;
+        //player 在屏幕中间
+        mapCamera.position.set(playerX, playerY, 0);
+        //不超出地图边界
+        float viewportHalfWidth = mapCamera.viewportWidth / 2;
+        float viewportHalfHeight = mapCamera.viewportHeight / 2;
+
         mapCamera.setToOrtho(false);
-        mapCamera.position.x = 3.5f * TILE_SIZE_PX * SCALE;
-        mapCamera.position.y = 3.5f * TILE_SIZE_PX * SCALE;
+        mapCamera.position.x = Math.max(viewportHalfWidth, Math.min(playerX, map.getWidth() * TILE_SIZE_PX * SCALE - viewportHalfWidth));
+        mapCamera.position.y = Math.max(viewportHalfHeight, Math.min(playerY, map.getHeight() * TILE_SIZE_PX * SCALE - viewportHalfHeight));
         mapCamera.update(); // This is necessary to apply the changes
     }
     
@@ -106,6 +116,11 @@ public class GameScreen implements Screen {
         
         // Render everything in the map here, in order from lowest to highest (later things appear on top)
         // You may want to add a method to GameMap to return all the drawables in the correct order
+        //flowers
+        for (Flowers flowers : map.getFlowers()) {
+            draw(spriteBatch, flowers);
+        }
+        //walls
         for (int y = 0; y < map.getWalls().length; y++) {
             for (int x = 0; x < map.getWalls()[y].length; x++) {
                 Wall wall = map.getWallAt(x, y);
@@ -114,13 +129,8 @@ public class GameScreen implements Screen {
                 }
             }
         }
-
-        for (Flowers flowers : map.getFlowers()) {
-            draw(spriteBatch, flowers);
-        }
         draw(spriteBatch, map.getChest());
         draw(spriteBatch, map.getPlayer());
-        
         // Finish drawing, i.e. send the drawn items to the graphics card
         spriteBatch.end();
     }
@@ -151,6 +161,9 @@ public class GameScreen implements Screen {
     @Override
     public void resize(int width, int height) {
         mapCamera.setToOrtho(false);
+        mapCamera.viewportWidth = width / SCALE;
+        mapCamera.viewportHeight = height / SCALE;
+        mapCamera.update();
         hud.resize(width, height);
     }
 

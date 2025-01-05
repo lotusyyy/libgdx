@@ -48,4 +48,9 @@ public class Wall implements Drawable {
             texture = null;//墙被摧毁后，从画面中消失
         }
     }
+    //check whether the destructible wall is destroyed or not
+    public boolean isDestroyed(){
+        return this.destructible && this.texture == null;
+    }
+
 }

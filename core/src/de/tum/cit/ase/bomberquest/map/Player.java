@@ -23,13 +23,16 @@ public class Player implements Drawable {
     
     /** The Box2D hitbox of the player, used for position and collision detection. */
     private final Body hitbox;
+    private final GameMap map;
 
     //新添加两个变量
     float yVelocity = 0.0f;
     float xVelocity = 0.0f;
 
-    public Player(World world, float x, float y) {
+    public Player(World world, float x, float y, GameMap map) {
+
         this.hitbox = createHitbox(world, x, y);
+        this.map = map;
     }
     
     /**
@@ -97,7 +100,17 @@ public class Player implements Drawable {
             yVelocity = 0;
         }
 
-        this.hitbox.setLinearVelocity(xVelocity, yVelocity);
+        //计算目标位置
+        float targetX = this.getX() + xVelocity * frameTime;
+        float targetY = this.getY() + yVelocity * frameTime;
+        // 检查目标位置是否可通行
+        if (map.isPassable((int) Math.floor(targetX), (int) Math.floor(targetY))) {
+            // 更新玩家的速度（允许移动）
+            this.hitbox.setLinearVelocity(xVelocity, yVelocity);
+        } else {
+            // 如果目标位置不可通行，停止移动
+            this.hitbox.setLinearVelocity(0, 0);
+        }
     }
 
     //改动：

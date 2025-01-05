@@ -47,7 +47,8 @@ public class GameMap {
     private final World world;
     
     // Game objects
-    private final Player player;
+   // private final Player player;
+    private Player player;
     
     private final Chest chest;
     
@@ -63,9 +64,9 @@ public class GameMap {
         this.game = game;
         this.world = new World(Vector2.Zero, true);
         // Create a player with initial position (1, 3)
-        this.player = new Player(this.world, 1, 3);//入口位置
-        this.entrance = new Vector2(1,3);//保存入口位置
-        this.exit = new Vector2(5,5);//暂定，需要destructive wall设置
+        this.player = new Player(this.world, 1, 3, this);//入口位置
+        //this.entrance = new Vector2(1,3);//保存入口位置
+        //this.exit = new Vector2(5,5);//暂定，需要destructive wall设置
         this.exitRevealed = false;
         // Create a chest in the middle of the map
         this.chest = new Chest(world, 3, 3);
@@ -112,6 +113,7 @@ public class GameMap {
                     break;
                 case 2: // 入口
                     this.entrance = new Vector2(x, y);
+                    this.player = new Player(this.world,x ,y ,this);
                     break;
                 case 3: // 敌人
                     // 初始化敌人列表并添加
@@ -177,10 +179,22 @@ public class GameMap {
             exitRevealed = true;
         }
     }
+    //检查指定位置是否可以通行
+    public boolean isPassable(int x, int y){
+        // 检查坐标是否在地图范围内
+        if (x < 0 || y < 0 || y >= walls.length || x >= walls[0].length) {
+            return false; // 超出地图范围不可通行
+        }
+        Wall wall = walls[y][x];
+        if (wall == null) {
+            return true; // 如果没有墙，可以通行
+        }
+        return wall.isDestructible() && wall.isDestroyed(); // 可破坏墙且已被摧毁则可通行
+    }
     
     /** Returns the player on the map. */
     public Player getPlayer() {
-        return player;
+        return this.player;
     }
     
     /** Returns the chest on the map. */
@@ -203,4 +217,13 @@ public class GameMap {
         }
         return walls[y][x]; // 返回对应位置的墙壁
     }
+    public int getWidth() {
+        if (walls == null || walls.length == 0) return 0; // 防止空指针异常
+        return walls[0].length; // 返回第一行的列数
+    }
+    public int getHeight() {
+        if (walls == null) return 0; // 防止空指针异常
+        return walls.length; // 返回总行数
+    }
+
 }
