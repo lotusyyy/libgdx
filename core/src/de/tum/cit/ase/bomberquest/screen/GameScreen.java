@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.ScreenUtils;
 import de.tum.cit.ase.bomberquest.BomberQuestGame;
 import de.tum.cit.ase.bomberquest.map.Flowers;
+import de.tum.cit.ase.bomberquest.map.Wall;
 import de.tum.cit.ase.bomberquest.texture.Drawable;
 import de.tum.cit.ase.bomberquest.map.GameMap;
 
@@ -47,6 +48,7 @@ public class GameScreen implements Screen {
     public GameScreen(BomberQuestGame game) {
         this.game = game;
         this.spriteBatch = game.getSpriteBatch();
+
         this.map = game.getMap();
         this.hud = new Hud(spriteBatch, game.getSkin().getFont("font"));
         // Create and configure the camera for the game view
@@ -104,6 +106,15 @@ public class GameScreen implements Screen {
         
         // Render everything in the map here, in order from lowest to highest (later things appear on top)
         // You may want to add a method to GameMap to return all the drawables in the correct order
+        for (int y = 0; y < map.getWalls().length; y++) {
+            for (int x = 0; x < map.getWalls()[y].length; x++) {
+                Wall wall = map.getWallAt(x, y);
+                if (wall != null) {
+                    draw(spriteBatch, wall);
+                }
+            }
+        }
+
         for (Flowers flowers : map.getFlowers()) {
             draw(spriteBatch, flowers);
         }

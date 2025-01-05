@@ -5,8 +5,12 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import de.tum.cit.ase.bomberquest.BomberQuestGame;
 
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Properties;
 
 /**
  * Represents the game map.
@@ -48,13 +52,14 @@ public class GameMap {
     private final Chest chest;
     
     private final Flowers[][] flowers;
+    private final Wall[][] walls;
 
 
-    private final Vector2 entrance;//Vector2是二维向量
+    private Vector2 entrance;//Vector2是二维向量
     private Vector2 exit;
     private boolean exitRevealed = false;
     
-    public GameMap(BomberQuestGame game) {
+    public GameMap(BomberQuestGame game, String mapFilePath) throws IOException {
         this.game = game;
         this.world = new World(Vector2.Zero, true);
         // Create a player with initial position (1, 3)
@@ -71,7 +76,77 @@ public class GameMap {
                 this.flowers[i][j] = new Flowers(i, j);
             }
         }
+        //读取地图文件
+        Properties properties = new Properties();
+        properties.load(new FileReader(mapFilePath));
+        // 计算地图宽高（假设边界包含在内）
+        int maxX = 0, maxY = 0;
+
+        // 解析地图文件中的每一行
+        for (String key : properties.stringPropertyNames()) {
+            if (key.startsWith("#")) continue; // 跳过注释行
+
+            String[] coordinates = key.split(",");//key被用，分割成两个String
+            //将String变成integer
+            int x = Integer.parseInt(coordinates[0]);
+            int y = Integer.parseInt(coordinates[1]);
+            //更新maxX和maxY
+            maxX = Math.max(maxX, x);
+            maxY = Math.max(maxY, y);
+        }
+        //create walls，根据地图最大坐标initialize
+        this.walls = new Wall[maxY + 1][maxX + 1];
+        //根据地图内容，initialize walls
+        for (String key : properties.stringPropertyNames()) {//遍历所有keys
+            if (key.startsWith("#")) continue;
+            String[] coordinates = key.split(",");
+            int x = Integer.parseInt(coordinates[0]);
+            int y = Integer.parseInt(coordinates[1]);
+            int type = Integer.parseInt(properties.getProperty(key));
+            switch (type) {//根据type值，执行不同逻辑
+                case 0: // indestructible walls
+                    walls[y][x] = new Wall(x, y, false);
+                    break;
+                case 1: // 可破坏墙
+                    walls[y][x] = new Wall(x, y, true);
+                    break;
+                case 2: // 入口
+                    this.entrance = new Vector2(x, y);
+                    break;
+                case 3: // 敌人
+                    // 初始化敌人列表并添加
+                    break;
+                case 4: // 出口
+                    this.exit = new Vector2(x, y);
+                    break;
+                case 5: // 增加炸弹数量道具
+                case 6: // 增加爆炸范围道具
+                    walls[y][x] = new Wall(x, y, true); // 需要破坏墙才能获取
+                    break;
+            }
+        }
+
+        // 如果没有出口，随机设置一个
+        if (this.exit == null) {
+            addRandomExit();
+        }
     }
+    private void addRandomExit(){
+        List<Vector2> destructibleWalls = new ArrayList<>();
+        for (int y = 0; y < walls.length; y++) {
+            for (int x = 0; x < walls[y].length; x++) {
+                Wall wall = walls[y][x];
+                if (wall != null && wall.isDestructible()) {
+                    destructibleWalls.add(new Vector2(x, y));//destructible walls 加入Vector2 destructibleWalls列表
+                }
+            }
+        }
+        if (!destructibleWalls.isEmpty()) {
+            Vector2 randomWall = destructibleWalls.get((int) (Math.random() * destructibleWalls.size()));
+            this.exit = randomWall; // 设置随机出口
+        }
+    }
+
     
     /**
      * Updates the game state. This is called once per frame.
@@ -116,5 +191,16 @@ public class GameMap {
     /** Returns the flowers on the map. */
     public List<Flowers> getFlowers() {
         return Arrays.stream(flowers).flatMap(Arrays::stream).toList();
+    }
+
+    public Wall[][] getWalls() {
+        return walls;
+    }
+    public Wall getWallAt(int x, int y) {
+        // 检查坐标是否超出范围
+        if (x < 0 || y < 0 || y >= walls.length || x >= walls[y].length) {
+            return null; // 坐标超出范围
+        }
+        return walls[y][x]; // 返回对应位置的墙壁
     }
 }

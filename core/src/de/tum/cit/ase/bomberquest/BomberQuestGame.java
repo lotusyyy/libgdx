@@ -11,6 +11,11 @@ import de.tum.cit.ase.bomberquest.screen.GameScreen;
 import de.tum.cit.ase.bomberquest.screen.MenuScreen;
 import games.spooky.gdx.nativefilechooser.NativeFileChooser;
 
+import java.io.IOException;
+
+import static de.tum.cit.ase.bomberquest.screen.GameScreen.SCALE;
+import static de.tum.cit.ase.bomberquest.screen.GameScreen.TILE_SIZE_PX;
+
 /**
  * The BomberQuestGame class represents the core of the Bomber Quest game.
  * It manages the screens and global resources like SpriteBatch and Skin.
@@ -59,7 +64,12 @@ public class BomberQuestGame extends Game {
     public void create() {
         this.spriteBatch = new SpriteBatch(); // Create SpriteBatch for rendering
         this.skin = new Skin(Gdx.files.internal("skin/craftacular/craftacular-ui.json")); // Load UI skin
-        this.map = new GameMap(this); // Create a new game map (you should change this to load the map from a file instead)
+        try {
+            this.map = new GameMap(this, "maps/map-1.properties"); // Create a new game map (you should change this to load the map from a file instead)
+        } catch (IOException e) {
+            e.printStackTrace();
+            Gdx.app.exit();//如果地图加载失败，退出游戏
+        }
         MusicTrack.BACKGROUND.play(); // Play some background music
         goToMenu(); // Navigate to the menu screen
     }

@@ -12,6 +12,14 @@ public class Wall implements Drawable {
     protected TextureRegion texture;
     protected boolean destructible;
 
+    public boolean isDestructible() {
+        return destructible;
+    }
+
+    public void setDestructible(boolean destructible) {
+        this.destructible = destructible;
+    }
+
     public Wall(int x, int y, boolean destructible) {
         this.x = x;
         this.y = y;
@@ -32,5 +40,12 @@ public class Wall implements Drawable {
     @Override
     public float getY() {
         return y;
+    }
+
+    //destructible walls are destructed
+    public void destroy(){
+        if(destructible){
+            texture = null;//墙被摧毁后，从画面中消失
+        }
     }
 }
