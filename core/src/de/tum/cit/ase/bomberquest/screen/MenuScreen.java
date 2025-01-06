@@ -48,39 +48,7 @@ public class MenuScreen implements Screen {
         // Add a label as a title
         table.add(new Label("Hello World from the Menu!", game.getSkin(), "title")).padBottom(80).row();
 
-        //创建按钮：
-        TextButton continueButton = new TextButton("Continue the game", game.getSkin());
-        TextButton loadNewGameButton = new TextButton("Load a new map file and start a new game", game.getSkin());
-        TextButton exitButton = new TextButton("Exit the game", game.getSkin());
-        table.row().padTop(10);
-        table.add(continueButton).fillX().uniformX();
-        table.row().padTop(10);
-        table.add(loadNewGameButton).fillX().uniformX();
-        table.row().padTop(10);
-        table.add(exitButton).fillX().uniformX();
 
-      /*  // 设置按钮监听器
-        continueButton.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                game.continueGame();  // 继续游戏
-            }
-        });
-
-        loadNewGameButton.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                game.loadNewMapAndStartNewGame();  // 加载新地图并开始新游戏
-            }
-        });
-
-        exitButton.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                Gdx.app.exit();  // 退出游戏
-            }
-        });
-*/
         // Create and add a button to go to the game screen
         TextButton goToGameButton = new TextButton("Go To Game", game.getSkin());
         table.row().padTop(10);
