@@ -167,6 +167,9 @@ public class GameScreen implements Screen {
         hud.resize(width, height);
     }
 
+    
+
+
     // Unused methods from the Screen interface
     @Override
     public void pause() {
