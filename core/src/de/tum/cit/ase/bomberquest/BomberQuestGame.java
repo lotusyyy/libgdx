@@ -45,6 +45,16 @@ public class BomberQuestGame extends Game {
      */
     private GameMap map;
 
+    //新添加：
+    private GameScreen currentGameScreen;
+
+    public void continueGame() {
+        if (currentGameScreen != null) {
+            // 设置当前屏幕为游戏屏幕，恢复游戏
+            setScreen(currentGameScreen);
+        }
+    }
+
     /**
      * Constructor for BomberQuestGame.
      *

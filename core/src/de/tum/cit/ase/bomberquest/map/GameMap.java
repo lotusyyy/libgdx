@@ -56,6 +56,7 @@ public class GameMap {
     private final Wall[][] walls;
 
 
+
     private Vector2 entrance;//Vector2是二维向量
     private Vector2 exit;
     private boolean exitRevealed = false;
@@ -191,6 +192,7 @@ public class GameMap {
         }
         return wall.isDestructible() && wall.isDestroyed(); // 可破坏墙且已被摧毁则可通行
     }
+
     
     /** Returns the player on the map. */
     public Player getPlayer() {

@@ -41,6 +41,7 @@ public class GameScreen implements Screen {
     private final Hud hud;
     private final OrthographicCamera mapCamera;
 
+
     /**
      * Constructor for GameScreen. Sets up the camera and font.
      *
@@ -166,6 +167,9 @@ public class GameScreen implements Screen {
         mapCamera.update();
         hud.resize(width, height);
     }
+
+    
+
 
     // Unused methods from the Screen interface
     @Override
