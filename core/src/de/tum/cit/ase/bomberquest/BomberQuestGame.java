@@ -3,6 +3,7 @@ package de.tum.cit.ase.bomberquest;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import de.tum.cit.ase.bomberquest.audio.MusicTrack;
@@ -10,7 +11,11 @@ import de.tum.cit.ase.bomberquest.map.GameMap;
 import de.tum.cit.ase.bomberquest.screen.GameScreen;
 import de.tum.cit.ase.bomberquest.screen.MenuScreen;
 import games.spooky.gdx.nativefilechooser.NativeFileChooser;
+import games.spooky.gdx.nativefilechooser.NativeFileChooserCallback;
+import games.spooky.gdx.nativefilechooser.NativeFileChooserConfiguration;
 
+import java.io.File;
+import java.io.FilenameFilter;
 import java.io.IOException;
 
 import static de.tum.cit.ase.bomberquest.screen.GameScreen.SCALE;
@@ -84,6 +89,52 @@ public class BomberQuestGame extends Game {
         goToMenu(); // Navigate to the menu screen
     }
 
+    public void loadNewMap() {
+        // Configure
+        NativeFileChooserConfiguration conf = new NativeFileChooserConfiguration();
+
+        // Starting from user's dir
+        conf.directory = Gdx.files.local("maps");
+
+        // Filter out all files which do not have the .ogg extension and are not of an audio MIME type - belt and braces
+        conf.mimeFilter = "map/*";
+        conf.nameFilter = new FilenameFilter() {
+            @Override
+            public boolean accept(File dir, String name) {
+                return name.endsWith("properties");
+            }
+        };
+
+        // Add a nice title
+        conf.title = "Choose map file";
+
+        fileChooser.chooseFile(conf, new NativeFileChooserCallback() {
+            @Override
+            public void onFileChosen(FileHandle file) {
+                try {
+                     map = new GameMap(BomberQuestGame.this, file.path()); // Create a new game map (you should change this to load the map from a file instead)
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    Gdx.app.exit();//如果地图加载失败，退出游戏
+                }
+
+                goToGame();
+            }
+
+            @Override
+            public void onCancellation() {
+
+            }
+
+            @Override
+            public void onError(Exception exception) {
+
+            }
+        });
+
+
+    }
+
     /**
      * Switches to the menu screen.
      */
@@ -95,7 +146,8 @@ public class BomberQuestGame extends Game {
      * Switches to the game screen.
      */
     public void goToGame() {
-        this.setScreen(new GameScreen(this)); // Set the current screen to GameScreen
+        currentGameScreen = new GameScreen(this);
+        this.setScreen(currentGameScreen); // Set the current screen to GameScreen
     }
 
     /** Returns the skin for UI elements. */
@@ -134,4 +186,6 @@ public class BomberQuestGame extends Game {
         spriteBatch.dispose(); // Dispose the spriteBatch
         skin.dispose(); // Dispose the skin
     }
+
+
 }

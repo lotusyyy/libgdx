@@ -62,15 +62,35 @@ public class MenuScreen implements Screen {
 
         //创建按钮：
         TextButton continueButton = new TextButton("Continue the game", game.getSkin());
+        continueButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                game.continueGame();
+            }
+        });
+
         TextButton loadNewGameButton = new TextButton("Load a new map file and start a new game", game.getSkin());
+        loadNewGameButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                game.loadNewMap();
+            }
+        });
+
         TextButton exitButton = new TextButton("Exit the game", game.getSkin());
+        exitButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                Gdx.app.exit();
+            }
+        });
+
         table.row().padTop(10);
         table.add(continueButton).fillX().uniformX();
         table.row().padTop(10);
         table.add(loadNewGameButton).fillX().uniformX();
         table.row().padTop(10);
         table.add(exitButton).fillX().uniformX();
-
     }
     
     /**
