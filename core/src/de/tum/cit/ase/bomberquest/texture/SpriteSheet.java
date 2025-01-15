@@ -57,5 +57,5 @@ public enum SpriteSheet {
                 this.height
         );
     }
-    
+
 }

@@ -2,6 +2,7 @@ package de.tum.cit.ase.bomberquest.map;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -111,27 +112,36 @@ public class Player implements Drawable {
             // 如果目标位置不可通行，停止移动
             this.hitbox.setLinearVelocity(0, 0);
         }
+
+        TextureRegion textureRegion = getCurrentAppearance();
+        System.out.println(hitbox.getPosition() + " " + hitbox.getFixtureList());
     }
 
     //改动：
     @Override
     public TextureRegion getCurrentAppearance() {
+        TextureRegion textureRegion = null;
+
         if (Math.abs(yVelocity) > Math.abs(xVelocity)) {
             if (yVelocity > 0) {
-                return Animations.CHARACTER_WALK_UP.getKeyFrame(this.elapsedTime, true);
+                textureRegion = Animations.CHARACTER_WALK_UP.getKeyFrame(this.elapsedTime, true);
             } else {
-                return Animations.CHARACTER_WALK_DOWN.getKeyFrame(this.elapsedTime, true);
+                textureRegion = Animations.CHARACTER_WALK_DOWN.getKeyFrame(this.elapsedTime, true);
             }
         } else {
             if (xVelocity > 0) {
-                return Animations.CHARACTER_WALK_RIGHT.getKeyFrame(this.elapsedTime, true);
+                textureRegion = Animations.CHARACTER_WALK_RIGHT.getKeyFrame(this.elapsedTime, true);
             } else if (xVelocity < 0) {
-                return Animations.CHARACTER_WALK_LEFT.getKeyFrame(this.elapsedTime, true);
+                textureRegion = Animations.CHARACTER_WALK_LEFT.getKeyFrame(this.elapsedTime, true);
             } else {
                 // Option for when the player is standing still
-                return Animations.CHARACTER_WALK_DOWN.getKeyFrame(this.elapsedTime, true);
+                textureRegion = Animations.CHARACTER_WALK_DOWN.getKeyFrame(this.elapsedTime, true);
             }
         }
+
+        TextureRegion changed = new TextureRegion();
+        changed.setRegion(textureRegion, 0, 6, 16, 20);
+        return  changed;
     }
     
     @Override
