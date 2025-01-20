@@ -214,8 +214,10 @@ public class GameMap {
         float h2 = b.getHeight();
 
 
-        Rectangle r1 = new Rectangle((int)(x1*64), (int)(y1*64)-(int)h1 * 64, (int)w1 * 64,(int)h1 * 64);
-        Rectangle r2 = new Rectangle((int)(x2*64), (int)(y2*64)-(int)h2 * 64, (int)w2 * 64,(int)h2 * 64);
+        Rectangle r1 = new Rectangle((int)(x1*64), (int)(y1*64)-(int)   64, (int)(w1 * 64),(int)(h1 * 64));
+        Rectangle r2 = new Rectangle((int)(x2*64), (int)(y2*64)-(int)   64, (int)(w2 * 64),(int)(h2 * 64));
+
+        System.out.println(r1 + " " + r2);
         return r1.intersects(r2);
     }
 

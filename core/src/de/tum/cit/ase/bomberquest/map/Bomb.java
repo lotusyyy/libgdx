@@ -100,7 +100,7 @@ public class Bomb implements Drawable {
 
             //检查是否有玩家
             map.getPlayer();//玩家被炸死
-            if(map.contains(map.getPlayer(),targetX*64, targetY*64)) {
+            if(map.isCollision(map.getPlayer(),this)) {
                 map.getPlayer().kill();//玩家死亡
                 map.getGame().goToVictoryAndGameOver(false);
             }

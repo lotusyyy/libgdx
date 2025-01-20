@@ -190,7 +190,7 @@ public class Player implements Drawable {
 
         try {
             int bombX = (int)  (hitbox.getPosition().x);
-            int bombY = (int)  (hitbox.getPosition().y);
+            int bombY = (int) Math.ceil (hitbox.getPosition().y);
 
             System.out.println("Attempting to place bomb at: " + bombX + ", " + bombY + ", bombsPlaced is " + bombsPlaced);
 
