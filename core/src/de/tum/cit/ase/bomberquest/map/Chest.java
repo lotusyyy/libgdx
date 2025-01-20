@@ -13,7 +13,17 @@ public class Chest implements Drawable {
     // We would normally get the position from the hitbox, but since we don't need to move the chest, we can store the position directly.
     private final float x;
     private final float y;
-    
+
+    @Override
+    public float getWidth() {
+        return 1;
+    }
+
+    @Override
+    public float getHeight() {
+        return 1;
+    }
+
     /**
      * Create a chest at the given position.
      * @param world The Box2D world to add the chest's hitbox to.

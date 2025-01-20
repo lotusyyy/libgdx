@@ -18,7 +18,17 @@ public class Flowers implements Drawable {
         this.x = x;
         this.y = y;
     }
-    
+
+    @Override
+    public float getWidth() {
+        return 1;
+    }
+
+    @Override
+    public float getHeight() {
+        return 1;
+    }
+
     @Override
     public TextureRegion getCurrentAppearance() {
         return Textures.FLOWERS;

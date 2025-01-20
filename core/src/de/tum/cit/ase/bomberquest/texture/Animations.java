@@ -20,7 +20,7 @@ public class Animations {
             SpriteSheet.CHARACTER.at(1, 3),
             SpriteSheet.CHARACTER.at(1, 4)
     );
-   //新添加：这里的row和column根据”character“图像里来引用
+   //新添加：这里的row和column根据”character“图像里来引用, player:
     public static final Animation<TextureRegion> CHARACTER_WALK_UP = new Animation<>(0.1f,
             SpriteSheet.CHARACTER.at(3, 1),
             SpriteSheet.CHARACTER.at(3, 2),
@@ -38,5 +38,37 @@ public class Animations {
             SpriteSheet.CHARACTER.at(2, 2),
             SpriteSheet.CHARACTER.at(2, 3),
             SpriteSheet.CHARACTER.at(2, 4));
-    
+
+   //enemy:
+   public static final Animation<TextureRegion> ENEMY_WALK_DOWN = new Animation<>(0.1f,
+           SpriteSheet.ENEMY.at(5, 7),
+           SpriteSheet.ENEMY.at(5, 8),
+           SpriteSheet.ENEMY.at(5, 9)
+   );
+
+    public static final Animation<TextureRegion> ENEMY_WALK_UP = new Animation<>(0.1f,
+            SpriteSheet.ENEMY.at(8, 7),
+            SpriteSheet.ENEMY.at(8, 8),
+            SpriteSheet.ENEMY.at(8, 9)
+    );
+
+    public static final Animation<TextureRegion> ENEMY_WALK_LEFT = new Animation<>(0.1f,
+            SpriteSheet.ENEMY.at(6, 7),
+            SpriteSheet.ENEMY.at(6, 8),
+            SpriteSheet.ENEMY.at(6, 9)
+    );
+
+    public static final Animation<TextureRegion> ENEMY_WALK_RIGHT = new Animation<>(0.1f,
+            SpriteSheet.ENEMY.at(7, 7),
+            SpriteSheet.ENEMY.at(7, 8),
+            SpriteSheet.ENEMY.at(7, 9)
+    );
+    public static final Animation<TextureRegion> BOMB_EXPLOSION = new Animation<>(0.1f,
+            SpriteSheet.BOMB.at(5, 1),
+            SpriteSheet.BOMB.at(5, 2),
+            SpriteSheet.BOMB.at(5, 3),
+            SpriteSheet.BOMB.at(5, 4)
+    );
+
+
 }

@@ -5,6 +5,8 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+import static com.badlogic.gdx.scenes.scene2d.utils.TiledDrawable.draw;
+
 /**
  * A Heads-Up Display (HUD) that displays information on the screen.
  * It uses a separate camera so that it is always fixed on the screen.
@@ -12,33 +14,55 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class Hud {
     
     /** The SpriteBatch used to draw the HUD. This is the same as the one used in the GameScreen. */
-    private final SpriteBatch spriteBatch;
+    private SpriteBatch spriteBatch;
     /** The font used to draw text on the screen. */
-    private final BitmapFont font;
+    private BitmapFont font;
     /** The camera used to render the HUD. */
-    private final OrthographicCamera camera;
+    private OrthographicCamera camera;
+    private CountdownTimer timer;
     
-    public Hud(SpriteBatch spriteBatch, BitmapFont font) {
+    public Hud(SpriteBatch spriteBatch, BitmapFont font, CountdownTimer timer) {
         this.spriteBatch = spriteBatch;
         this.font = font;
         this.camera = new OrthographicCamera();
+        camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        this.timer = timer;
     }
-    
+
+
+    public Hud() {
+    }
+
     /**
      * Renders the HUD on the screen.
      * This uses a different OrthographicCamera so that the HUD is always fixed on the screen.
      */
-    public void render() {
+    public void render(float playerX, float playerY) {
         // Render from the camera's perspective
         spriteBatch.setProjectionMatrix(camera.combined);
+
+        float hudX = playerX;
+        float hudY = playerY + 30;
+        // 转换到相对于摄像机的坐标
+        hudX -= camera.position.x - camera.viewportWidth / 2;
+        hudY -= camera.position.y - camera.viewportHeight / 2;
+
         // Start drawing
         spriteBatch.begin();
+
         // Draw the HUD elements
         font.draw(spriteBatch, "Press Esc to Pause!", 10, Gdx.graphics.getHeight() - 10);
+        //draw 剩余时间
+        font.draw(spriteBatch, "Time left: " + (int)timer.getTimeLeft() + " second(s)", 10, Gdx.graphics.getHeight() - 20);
+        font.draw(spriteBatch, "Player HUD", hudX,hudY);
         // Finish drawing
         spriteBatch.end();
+
     }
-    
+
+    public void dispose(){
+        font.dispose();
+    }
     /**
      * Resizes the HUD when the screen size changes.
      * This is called when the window is resized.

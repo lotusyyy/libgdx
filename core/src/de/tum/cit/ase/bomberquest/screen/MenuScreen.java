@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -17,6 +18,10 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import de.tum.cit.ase.bomberquest.BomberQuestGame;
+
+import java.io.IOException;
+
+import static com.badlogic.gdx.utils.JsonValue.ValueType.object;
 
 /**
  * The MenuScreen class is responsible for displaying the main menu of the game.
@@ -62,6 +67,25 @@ public class MenuScreen implements Screen {
 
         //创建按钮：
         TextButton continueButton = new TextButton("Continue the game", game.getSkin());
+        TextButton loadNewGameButton = new TextButton("Load a new map file and start a new game", game.getSkin());
+        TextButton exitButton = new TextButton("Exit the game", game.getSkin());
+        table.row().padTop(10);
+        table.add(continueButton).fillX().uniformX();
+        table.row().padTop(10);
+        table.add(loadNewGameButton).fillX().uniformX();
+        table.row().padTop(10);
+        table.add(exitButton).fillX().uniformX();
+
+        // 为选择新地图按钮添加事件监听器
+        loadNewGameButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                // 显示地图选择对话框
+               // showMapSelectionDialog();
+                game.loadNewMap();
+            }
+        });
+
         continueButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -69,30 +93,36 @@ public class MenuScreen implements Screen {
             }
         });
 
-        TextButton loadNewGameButton = new TextButton("Load a new map file and start a new game", game.getSkin());
-        loadNewGameButton.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                game.loadNewMap();
-            }
-        });
-
-        TextButton exitButton = new TextButton("Exit the game", game.getSkin());
         exitButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 Gdx.app.exit();
             }
         });
-
-        table.row().padTop(10);
-        table.add(continueButton).fillX().uniformX();
-        table.row().padTop(10);
-        table.add(loadNewGameButton).fillX().uniformX();
-        table.row().padTop(10);
-        table.add(exitButton).fillX().uniformX();
     }
-    
+
+    // 显示地图选择对话框的方法
+    private void showMapSelectionDialog() {
+        Dialog dialog = new Dialog("Select Map", game.getSkin()) {
+            @Override
+            protected void result(Object object) {
+                if (object instanceof String) {
+                    String selectedMap = (String) object; // 获取玩家选择的地图文件
+                    try {
+                        game.loadMap("maps/" + selectedMap); // 加载玩家选择的地图
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        };
+
+        dialog.text("Choose a map to load:");
+        dialog.button("Map 1", "map-1.properties"); // 设置按钮和对应地图文件
+        dialog.button("Map 2", "map-2.properties"); // 设置按钮和对应地图文件
+        dialog.show(stage); // 在当前舞台上显示对话框
+    }
+
     /**
      * The render method is called every frame to render the menu screen.
      * It clears the screen and draws the stage.

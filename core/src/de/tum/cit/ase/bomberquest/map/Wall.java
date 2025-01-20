@@ -1,6 +1,7 @@
 package de.tum.cit.ase.bomberquest.map;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import de.tum.cit.ase.bomberquest.texture.Drawable;
 import de.tum.cit.ase.bomberquest.texture.Textures;
 
@@ -25,6 +26,19 @@ public class Wall implements Drawable {
         this.y = y;
         this.destructible = destructible;
         this.texture = destructible ? Textures.DESTRUCTIBLE_WALL : Textures.INDESTRUCTIBLE_WALL;
+    }
+
+    @Override
+    public float getWidth() {
+        return 1;
+    }
+
+    @Override
+    public float getHeight() {
+        return 1;
+    }
+    public Vector2 getPosition() {
+        return new Vector2(x, y);
     }
 
     @Override

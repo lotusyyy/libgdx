@@ -4,12 +4,16 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import de.tum.cit.ase.bomberquest.audio.MusicTrack;
+import de.tum.cit.ase.bomberquest.map.Bomb;
 import de.tum.cit.ase.bomberquest.map.GameMap;
+import de.tum.cit.ase.bomberquest.screen.CountdownTimer;
 import de.tum.cit.ase.bomberquest.screen.GameScreen;
 import de.tum.cit.ase.bomberquest.screen.MenuScreen;
+import de.tum.cit.ase.bomberquest.screen.VictoryAndGameOverScreen;
 import games.spooky.gdx.nativefilechooser.NativeFileChooser;
 import games.spooky.gdx.nativefilechooser.NativeFileChooserCallback;
 import games.spooky.gdx.nativefilechooser.NativeFileChooserConfiguration;
@@ -53,6 +57,9 @@ public class BomberQuestGame extends Game {
     //新添加：
     private GameScreen currentGameScreen;
 
+    //计时器
+    private CountdownTimer timer;
+
     public void continueGame() {
         if (currentGameScreen != null) {
             // 设置当前屏幕为游戏屏幕，恢复游戏
@@ -77,16 +84,27 @@ public class BomberQuestGame extends Game {
      */
     @Override
     public void create() {
+        Bomb.victoryAndGameOverScreen = new VictoryAndGameOverScreen(this, true);
+
         this.spriteBatch = new SpriteBatch(); // Create SpriteBatch for rendering
         this.skin = new Skin(Gdx.files.internal("skin/craftacular/craftacular-ui.json")); // Load UI skin
         try {
+            //默认加载第一个地图
             this.map = new GameMap(this, "maps/map-1.properties"); // Create a new game map (you should change this to load the map from a file instead)
         } catch (IOException e) {
             e.printStackTrace();
             Gdx.app.exit();//如果地图加载失败，退出游戏
         }
+        BitmapFont font = new BitmapFont();
         MusicTrack.BACKGROUND.play(); // Play some background music
         goToMenu(); // Navigate to the menu screen
+    }
+
+    //加载指定地图，并切换到游戏界面
+    public void loadMap(String mapFilePath) throws IOException {
+        this.map = new GameMap(this, mapFilePath); // 加载地图
+        this.currentGameScreen = new GameScreen(this, map); // 创建新的游戏屏幕
+        setScreen(currentGameScreen); // 切换到新的游戏屏幕
     }
 
     public void loadNewMap() {
@@ -112,7 +130,7 @@ public class BomberQuestGame extends Game {
             @Override
             public void onFileChosen(FileHandle file) {
                 try {
-                     map = new GameMap(BomberQuestGame.this, file.path()); // Create a new game map (you should change this to load the map from a file instead)
+                    map = new GameMap(BomberQuestGame.this, file.path()); // Create a new game map (you should change this to load the map from a file instead)
                 } catch (IOException e) {
                     e.printStackTrace();
                     Gdx.app.exit();//如果地图加载失败，退出游戏
@@ -131,8 +149,6 @@ public class BomberQuestGame extends Game {
 
             }
         });
-
-
     }
 
     /**
@@ -146,9 +162,15 @@ public class BomberQuestGame extends Game {
      * Switches to the game screen.
      */
     public void goToGame() {
-        currentGameScreen = new GameScreen(this);
+        currentGameScreen = new GameScreen(this, this.map);
         this.setScreen(currentGameScreen); // Set the current screen to GameScreen
     }
+
+    //新添加:
+    /**
+     * Switches to the VictoryAndGameOver screen
+     */
+    public void goToVictoryAndGameOver(boolean won){this.setScreen(new VictoryAndGameOverScreen(this, won));}
 
     /** Returns the skin for UI elements. */
     public Skin getSkin() {
@@ -173,8 +195,8 @@ public class BomberQuestGame extends Game {
     public void setScreen(Screen screen) {
         Screen previousScreen = super.screen;
         super.setScreen(screen);
-        if (previousScreen != null) {
-            previousScreen.dispose();
+        if (previousScreen != null && previousScreen != screen) {
+           // previousScreen.dispose();
         }
     }
 
@@ -186,6 +208,4 @@ public class BomberQuestGame extends Game {
         spriteBatch.dispose(); // Dispose the spriteBatch
         skin.dispose(); // Dispose the skin
     }
-
-
 }

@@ -5,15 +5,17 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.ScreenUtils;
 import de.tum.cit.ase.bomberquest.BomberQuestGame;
-import de.tum.cit.ase.bomberquest.map.Flowers;
-import de.tum.cit.ase.bomberquest.map.Player;
-import de.tum.cit.ase.bomberquest.map.Wall;
+import de.tum.cit.ase.bomberquest.map.*;
 import de.tum.cit.ase.bomberquest.texture.Drawable;
-import de.tum.cit.ase.bomberquest.map.GameMap;
+
+import java.awt.image.ImageProducer;
 
 /**
  * The GameScreen class is responsible for rendering the gameplay screen.
@@ -36,10 +38,14 @@ public class GameScreen implements Screen {
     public static final int SCALE = 4;
 
     private final BomberQuestGame game;
-    private final SpriteBatch spriteBatch;
+    private SpriteBatch spriteBatch;//渲染器
     private final GameMap map;
-    private final Hud hud;
+    private Hud hud;
     private final OrthographicCamera mapCamera;
+    private CountdownTimer timer;
+    private boolean isGameOver = false;
+    private Player player;
+    private World world;
 
 
     /**
@@ -47,15 +53,18 @@ public class GameScreen implements Screen {
      *
      * @param game The main game class, used to access global resources and methods.
      */
-    public GameScreen(BomberQuestGame game) {
+    public GameScreen(BomberQuestGame game, GameMap map) {
+        this.world = new World(new Vector2(0,0), true);//无重力
         this.game = game;
         this.spriteBatch = game.getSpriteBatch();
 
         this.map = game.getMap();
-        this.hud = new Hud(spriteBatch, game.getSkin().getFont("font"));
+        this.hud = new Hud(spriteBatch, game.getSkin().getFont("font"), timer);
         // Create and configure the camera for the game view
         this.mapCamera = new OrthographicCamera();
         this.mapCamera.setToOrtho(false);
+        Vector2 entrance = map.getEntrance();
+        this.player = map.getPlayer();
     }
     
     /**
@@ -64,6 +73,17 @@ public class GameScreen implements Screen {
      */
     @Override
     public void render(float deltaTime) {
+        updateGameLogic(deltaTime);//更新游戏逻辑
+        //渲染HUD （剩余时间）
+        spriteBatch.begin();
+        drawHUD();
+        spriteBatch.end();
+
+        //计时结束，游戏失败
+        if(timer.isGameOver() && !isGameOver){
+            isGameOver = true;
+            onGameOver();
+        }
         // Check for escape key press to go back to the menu
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             game.goToMenu();
@@ -80,12 +100,16 @@ public class GameScreen implements Screen {
         
         // Update the camera
         updateCamera();
+
+        //update玩家输入
+        player.handleInput();
         
         // Render the map on the screen
         renderMap();
         
         // Render the HUD on the screen
-        hud.render();
+        hud.render(player.getX(), player.getY());
+
     }
     
     /**
@@ -117,6 +141,9 @@ public class GameScreen implements Screen {
         
         // Render everything in the map here, in order from lowest to highest (later things appear on top)
         // You may want to add a method to GameMap to return all the drawables in the correct order
+
+
+
         //flowers
         for (Flowers flowers : map.getFlowers()) {
             draw(spriteBatch, flowers);
@@ -130,6 +157,19 @@ public class GameScreen implements Screen {
                 }
             }
         }
+        // enemies
+        for (Enemy enemy : map.getEnemies()) {
+            draw(spriteBatch, enemy);
+        }
+        //bombs
+        for (Bomb bomb : map.getBombs()) {
+            System.out.println("Rendering bomb at: " + bomb.getX() + ", " + bomb.getY());
+            bomb.render(spriteBatch);
+            draw(spriteBatch, bomb);
+
+        }
+
+
         draw(spriteBatch, map.getChest());
         draw(spriteBatch, map.getPlayer());
         // Finish drawing, i.e. send the drawn items to the graphics card
@@ -150,9 +190,38 @@ public class GameScreen implements Screen {
         // Additionally scale everything by the game scale
         float width = texture.getRegionWidth() * SCALE;
         float height = texture.getRegionHeight() * SCALE;
+
+        if(drawable instanceof  Player){
+            width = 16 * SCALE;
+            height = 16 * SCALE;
+        }
         spriteBatch.draw(texture, x, y, width, height);
     }
-    
+
+    //更新游戏逻辑
+    private void updateGameLogic(float deltaTime){
+        //eg:玩家移动，炸弹爆炸
+        player.tick(deltaTime);
+        player.handleInput();
+        map.updateBombs(deltaTime);
+        map.updateEnemies(deltaTime);
+        // 检查游戏是否结束
+        if (timer.isGameOver() && !isGameOver) {
+            isGameOver = true;
+            onGameOver();
+        }
+    }
+
+    private void drawHUD(){
+        //绘制剩余时间
+        BitmapFont font = new BitmapFont();
+        font.draw(spriteBatch, "Time left: " +(int)timer.getTimeLeft() + " second(s)", player.getX(), player.getY()+ 30);
+    }
+
+    private void onGameOver(){
+        System.out.println("Time out, game failed! ");
+        //切换到游戏失败界面or主页面
+    }
     /**
      * Called when the window is resized.
      * This is where the camera is updated to match the new window size.
@@ -182,7 +251,13 @@ public class GameScreen implements Screen {
 
     @Override
     public void show() {
+        spriteBatch = new SpriteBatch();
+        timer = new CountdownTimer(300);//初始化计时器，300s
+        timer.start();
+        BitmapFont font = new BitmapFont();
 
+        //将计时器传递给hud
+        hud = new Hud(spriteBatch, font, timer);
     }
 
     @Override
@@ -191,6 +266,7 @@ public class GameScreen implements Screen {
 
     @Override
     public void dispose() {
+        spriteBatch.dispose();
     }
 
 }

@@ -33,5 +33,7 @@ public interface Drawable {
      * @return The Y coordinate of the drawable.
      */
     float getY();
-    
+
+    float getWidth();
+    float getHeight();
 }
