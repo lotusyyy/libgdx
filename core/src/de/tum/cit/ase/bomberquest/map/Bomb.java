@@ -8,9 +8,8 @@ import de.tum.cit.ase.bomberquest.texture.Animations;
 import de.tum.cit.ase.bomberquest.texture.Drawable;
 import de.tum.cit.ase.bomberquest.texture.Textures;
 
-public class Bomb implements Drawable {
-    private final float x;
-    private final float y;
+public class Bomb extends GameObject {
+
     private int explosionRadius = 1;
     private float bombTimer = 3.0f;
     private final float explosionDuration = 0.5f;
@@ -24,8 +23,7 @@ public class Bomb implements Drawable {
     private Player player;
 
     public Bomb(float x, float y, TextureRegion bombTexture, GameMap map, int explosionRadius) {
-        this.x = x;
-        this.y = y;
+        super(x, y);
         this.map = map;
         this.bombTexture = Textures.BOMB;
         //this.explosionSound = Gdx.audio.newSound(Gdx.files.internal("bomb_explosion.mp3"));
@@ -35,6 +33,9 @@ public class Bomb implements Drawable {
     }
 
     public void render(SpriteBatch spriteBatch) {
+        float x = getX();
+        float y = getY();
+
         if (exploded) {
             TextureRegion frame = explosionAnimation.getKeyFrame(explosionDuration - explosionTimer, false);
             spriteBatch.draw(frame, x, y, 1, 1); // 根据炸弹大小设置宽高
@@ -81,6 +82,10 @@ public class Bomb implements Drawable {
     }
 
     private void propagateBlast(Direction direction){
+        float x = getX();
+        float y = getY();
+
+
         for(int i = 0; i <= player.getBlastRadius(); i++){
             int targetX = (int) (x + 0.5f + direction.getOffsetX()* i);
             int targetY = (int) (y + 0.5f + direction.getOffsetY()* i);
@@ -126,24 +131,6 @@ public class Bomb implements Drawable {
 
 
         return exploded ? Animations.BOMB_EXPLOSION.getKeyFrame(stateTime, true) : Animations.BOMB_DISPLAY.getKeyFrame(stateTime, true);
-    }
-
-    @Override
-    public float getX() {
-        return x;
-    }
-
-    @Override
-    public float getY() {return y;}
-
-    @Override
-    public float getWidth() {
-        return 1;
-    }
-
-    @Override
-    public float getHeight() {
-        return 1;
     }
 
     public boolean isExploded() {

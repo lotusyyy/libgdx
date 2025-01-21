@@ -176,7 +176,6 @@ public class GameScreen implements Screen {
             draw(spriteBatch, bomb);
         }
 
-        draw(spriteBatch, map.getChest());
         draw(spriteBatch, map.getPlayer());
         // Finish drawing, i.e. send the drawn items to the graphics card
         spriteBatch.end();
@@ -198,8 +197,8 @@ public class GameScreen implements Screen {
         float height = texture.getRegionHeight() * SCALE;
 
         if(drawable instanceof  Player){
-            width = 16 * SCALE;
-            height = 16 * SCALE;
+            width = 8 * SCALE;
+            height = 13 * SCALE;
         }
         spriteBatch.draw(texture, x, y, width, height);
     }

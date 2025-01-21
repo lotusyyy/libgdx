@@ -14,7 +14,7 @@ import de.tum.cit.ase.bomberquest.texture.Textures;
  * Represents the player character in the game.
  * The player has a hitbox, so it can collide with other objects in the game.
  */
-public class Player implements Drawable {
+public class Player  extends  GameObject {
     
     /** Total time elapsed since the game started. We use this for calculating the player movement and animating it. */
     private float elapsedTime;
@@ -34,6 +34,7 @@ public class Player implements Drawable {
     float xVelocity = 0.0f;
     World world;
     public Player(World world, float x, float y, GameMap map) {
+        super(x, y);
         Vector2 entrance = map.getEntrance();
 
         this.world = world;
@@ -61,13 +62,13 @@ public class Player implements Drawable {
         // Now we need to give the body a shape so the physics engine knows how to collide with it.
         // We'll use a circle shape for the player.
 
-        //CircleShape circle = new CircleShape();
-        //circle.setRadius(0.3f);
-        //body.createFixture(circle, 1.0f);
+        CircleShape circle = new CircleShape();
+        circle.setRadius(0.3f);
+        body.createFixture(circle, 1.0f);
 
-        EdgeShape edgeShape = new EdgeShape();
-        edgeShape.set(startX, startY, startX + 0.4f, startY + 0.4f);
-        body.createFixture(edgeShape, 1.0f);
+        //EdgeShape edgeShape = new EdgeShape();
+        //edgeShape.set(startX, startY, startX + getWidth(), startY + getHeight());
+        //body.createFixture(edgeShape, 1.0f);
 
         // We're done with the shape, so we should dispose of it to free up memory.
         //circle.dispose();
@@ -87,7 +88,7 @@ public class Player implements Drawable {
      */
     public void tick(float frameTime) {//更新玩家状态，移动和动画
         this.elapsedTime += frameTime;
-        float inputSpeed = 2f;
+        float inputSpeed = 1.5f;
 
         // 重置速度
         xVelocity = 0;
@@ -194,8 +195,8 @@ public class Player implements Drawable {
        // }
 
         try {
-            int bombX = (int)  (hitbox.getPosition().x);
-            int bombY = (int) Math.ceil (hitbox.getPosition().y);
+            int bombX = (int)  Math.floor(hitbox.getPosition().x);
+            int bombY = (int) Math.floor (hitbox.getPosition().y);
 
             System.out.println("Attempting to place bomb at: " + bombX + ", " + bombY + ", bombsPlaced is " + bombsPlaced);
 
@@ -225,12 +226,12 @@ public class Player implements Drawable {
 
     @Override
     public float getWidth() {
-        return 0.6f;
+        return 0.5f;
     }
 
     @Override
     public float getHeight() {
-        return 0.6f;
+        return 0.5f;
     }
 
     //移除炸弹（炸弹爆炸后调用）

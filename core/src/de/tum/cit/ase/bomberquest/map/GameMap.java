@@ -52,9 +52,7 @@ public class GameMap {
     // Game objects
    // private final Player player;
     private Player player;
-    
-    private final Chest chest;
-    
+
     private final Flowers[][] flowers;
     private final Wall[][] walls;
     private List<Enemy> enemies = new ArrayList<>();
@@ -70,11 +68,11 @@ public class GameMap {
         this.game = game;
         this.world = new World( new Vector2(0,0), true);
 
+        System.out.println("GameMap: " + mapFilePath);
         //this.entrance = new Vector2(1,3);//保存入口位置
         //this.exit = new Vector2(5,5);//暂定，需要destructive wall设置
         this.exitRevealed = false;
-        // Create a chest in the middle of the map
-        this.chest = new Chest(world, 3, 3);
+
         // Create flowers in a 7x7 grid
         this.flowers = new Flowers[Gdx.graphics.getWidth()][Gdx.graphics.getHeight()];
         for (int i = 0; i < flowers.length; i++) {
@@ -111,10 +109,10 @@ public class GameMap {
             int type = Integer.parseInt(properties.getProperty(key));
             switch (type) {//根据type值，执行不同逻辑
                 case 0: // indestructible walls
-                    walls[y][x] = new Wall(x, y, false);
+                    walls[y][x] = new IndestructibleWall(x, y);
                     break;
                 case 1: // 可破坏墙
-                    walls[y][x] = new Wall(x, y, true);
+                    walls[y][x] = new DestructibleWall(x, y);
                     break;
                 case 2: // 入口
                     this.entrance = new Vector2(x, y);
@@ -127,15 +125,15 @@ public class GameMap {
                     break;
                 case 4: // 出口
                     this.exit = new Exit(x, y);
-                    walls[y][x] = new Wall(x, y, true); // 需要破坏墙才能获取
+                    walls[y][x] = new DestructibleWall(x, y); // 需要破坏墙才能获取
                     break;
                 case 5: // 增加炸弹数量道具
                     powerUps.add(new PowerUp(x, y, PowerUpType.CONCURRENT_BOMBS));
-                    walls[y][x] = new Wall(x, y, true); // 需要破坏墙才能获取
+                    walls[y][x] = new DestructibleWall(x, y); // 需要破坏墙才能获取
                     break;
                 case 6: // 增加爆炸范围道具
                     powerUps.add(new PowerUp(x, y, PowerUpType.BLAST_RADIUS));
-                    walls[y][x] = new Wall(x, y, true); // 需要破坏墙才能获取
+                    walls[y][x] = new DestructibleWall(x, y); // 需要破坏墙才能获取
                     break;
             }
         }
@@ -189,6 +187,27 @@ public class GameMap {
                 powerUps.remove(powerUp);
             }
         }
+
+        for(Enemy enemy : enemies){
+            if(isCollision(player, enemy)){
+                getPlayer().kill();//玩家死亡
+                getGame().goToVictoryAndGameOver(false);
+                return;
+            }
+
+            for(Enemy enemy2 : enemies){
+                if(enemy != enemy2 && isCollision(enemy, enemy2)){
+                    enemy.randomVelocity();
+                    enemy2.randomVelocity();
+                    break;
+                }
+            }
+        }
+
+        if(exit.isUnlocked() && isCollision(player, exit)){
+            getGame().goToVictoryAndGameOver(true);
+            return;
+        }
     }
     
     /**
@@ -239,7 +258,7 @@ public class GameMap {
         Rectangle r1 = new Rectangle((int)(x1*64), (int)(y1*64)-(int)   64, (int)(w1 * 64),(int)(h1 * 64));
         Rectangle r2 = new Rectangle((int)(x2*64), (int)(y2*64)-(int)   64, (int)(w2 * 64),(int)(h2 * 64));
 
-        System.out.println(r1 + " " + r2);
+        //System.out.println(r1 + " " + r2);
         return r1.intersects(r2);
     }
 
@@ -251,11 +270,33 @@ public class GameMap {
                     Vector2 p1 = new Vector2(targetX, targetY);
                     Vector2 p2 = wall.getPosition();
 
-                    Rectangle r1 = new Rectangle((int)(p1.x*64), (int)(p1.y*64-player.getHeight()*64), (int)(player.getWidth()*64),(int)(player.getHeight()*64));
-                    Rectangle r2 = new Rectangle((int)(p2.x*64), (int)(p2.y*64)-64, 64,64);
+                    Rectangle r1 = new Rectangle((int)(p1.x*64), (int)(p1.y*64 ), (int)(player.getWidth()*64),(int)(player.getHeight()*64));
+                    Rectangle r2 = new Rectangle((int)(p2.x*64), (int)(p2.y*64) , 64,64);
 
                     if(r1.intersects(r2)){
-                        System.out.println(r1 + " " + r2);
+                        //System.out.println(r1 + " " + r2);
+                        return false;
+                    }
+                }
+            }
+        }
+
+        return true;
+    }
+
+    //检查指定位置是否可以通行
+    public boolean isPassableEnemy(Enemy enemy, float targetX, float targetY){
+        for(Wall[] row : walls){
+            for(Wall wall : row){
+                if(wall != null && !wall.isDestroyed()){
+                    Vector2 p1 = new Vector2(targetX, targetY);
+                    Vector2 p2 = wall.getPosition();
+
+                    Rectangle r1 = new Rectangle((int)(p1.x*64), (int)(p1.y*64 ), (int)(enemy.getWidth()*64),(int)(enemy.getHeight()*64));
+                    Rectangle r2 = new Rectangle((int)(p2.x*64), (int)(p2.y*64) , 64,64);
+
+                    if(r1.intersects(r2)){
+                       // System.out.println(r1 + " " + r2);
                         return false;
                     }
                 }
@@ -271,11 +312,7 @@ public class GameMap {
         return this.player;
     }
     
-    /** Returns the chest on the map. */
-    public Chest getChest() {
-        return chest;
-    }
-    
+
     /** Returns the flowers on the map. */
     public List<Flowers> getFlowers() {
         return Arrays.stream(flowers).flatMap(Arrays::stream).toList();
@@ -308,7 +345,7 @@ public class GameMap {
                     //System.out.println(wall.getY()*64 + wall.getHeight()*64);
                    // System.out.println(contains(wall, x, y));
                 }
-                if(wall != null && !wall.isDestroyed() && wall.isDestructible() && contains(wall, x, y)){
+                if(wall != null && !wall.isDestroyed() && contains(wall, x, y)){
                     return wall;
                 }
             }

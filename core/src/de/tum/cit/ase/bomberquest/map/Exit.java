@@ -9,29 +9,16 @@ import de.tum.cit.ase.bomberquest.texture.Textures;
  * They do not have a hitbox, so the player does not collide with them.
  * They are purely decorative and serve as a nice floor decoration.
  */
-public class Exit implements Drawable {
+public class Exit extends GameObject {
 
-    private final int x;
-    private final int y;
     private boolean unlocked;
 
     public Exit(int x, int y) {
-        this.x = x;
-        this.y = y;
+        super(x, y);
     }
 
     public void setUnlocked(boolean unlocked) {
         this.unlocked = unlocked;
-    }
-
-    @Override
-    public float getWidth() {
-        return 1;
-    }
-
-    @Override
-    public float getHeight() {
-        return 1;
     }
 
     @Override
@@ -46,13 +33,4 @@ public class Exit implements Drawable {
         return unlocked;
     }
 
-    @Override
-    public float getX() {
-        return x;
-    }
-    
-    @Override
-    public float getY() {
-        return y;
-    }
 }

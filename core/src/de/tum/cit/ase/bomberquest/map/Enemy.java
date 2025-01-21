@@ -14,11 +14,11 @@ import com.badlogic.gdx.physics.box2d.World;
 import java.util.Random;
 
 
-public class Enemy implements Drawable {
+public class Enemy extends GameObject {
 
     private Body hitbox;
     private GameMap map;
-    private float speed = 1.0f;  // 可调整
+    private float speed = 1f;  // 可调整
     private boolean alive = true;
     private Random random = new Random(); //用于生成随机数来控制敌人的随机移动。
     private Animation<TextureRegion> currentAnimation;
@@ -27,20 +27,11 @@ public class Enemy implements Drawable {
     private Vector2 velocity = new Vector2();
 
     public Enemy(World world, float x, float y, GameMap map) {
+        super(x, y);
         this.map = map;
         this.hitbox = createHitbox(world, x, y); //方法用于在指定位置创建敌人的物理体。
+        randomVelocity();
     }
-
-    @Override
-    public float getWidth() {
-        return 1;
-    }
-
-    @Override
-    public float getHeight() {
-        return 1;
-    }
-
 
     private Body createHitbox(World world, float x, float y) {
         BodyDef bodyDef = new BodyDef();
@@ -61,6 +52,18 @@ public class Enemy implements Drawable {
 
         stateTime += deltaTime;
 
+        float targetX = getX() + velocity.x;
+        float targetY = getY() + velocity.y;
+
+        if(map.isPassableEnemy(this, targetX, targetY)) {
+            // 应用速度向量更新物理体位置
+            hitbox.setLinearVelocity(velocity);
+        }else {
+            randomVelocity();
+        }
+    }
+
+    public void randomVelocity(){
         // 随机选择新的移动方向
         int moveDirection = random.nextInt(4);
         updateDirection(moveDirection);
@@ -84,9 +87,6 @@ public class Enemy implements Drawable {
                 currentAnimation = Animations.ENEMY_WALK_RIGHT;
                 break;
         }
-
-        // 应用速度向量更新物理体位置
-        hitbox.setLinearVelocity(velocity);
     }
 
     private void updateDirection(int moveDirection) {
@@ -108,18 +108,9 @@ public class Enemy implements Drawable {
     }
 
 
-    public void onBombExploded() {
-        // 处理炸弹爆炸时的互动逻辑
-
-        alive = false;  // 简单起见，如果炸弹在附近爆炸，就让敌人死亡
-    }
-
-
-
     public boolean isAlive() {
         return alive;
     }
-
 
     @Override
     public TextureRegion getCurrentAppearance() {
@@ -130,7 +121,6 @@ public class Enemy implements Drawable {
     public float getX() {
         return  hitbox.getPosition().x;
     }
-
 
     @Override
     public float getY() {

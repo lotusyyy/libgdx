@@ -108,6 +108,8 @@ public class BomberQuestGame extends Game {
     }
 
     public void loadNewMap() {
+        System.out.println("loadNewMap"  );
+
         // Configure
         NativeFileChooserConfiguration conf = new NativeFileChooserConfiguration();
 
@@ -130,13 +132,16 @@ public class BomberQuestGame extends Game {
             @Override
             public void onFileChosen(FileHandle file) {
                 try {
+                    System.out.println("Selected file: " + file.path());
                     map = new GameMap(BomberQuestGame.this, file.path()); // Create a new game map (you should change this to load the map from a file instead)
                 } catch (IOException e) {
                     e.printStackTrace();
+                    System.out.println(e.getMessage());
                     Gdx.app.exit();//如果地图加载失败，退出游戏
                 }
 
-                goToGame();
+                currentGameScreen = new GameScreen(BomberQuestGame.this, map);
+                setScreen(currentGameScreen); // Set the current screen to GameScreen
             }
 
             @Override
