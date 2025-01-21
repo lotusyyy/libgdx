@@ -13,10 +13,15 @@ public class Exit implements Drawable {
 
     private final int x;
     private final int y;
+    private boolean unlocked;
 
     public Exit(int x, int y) {
         this.x = x;
         this.y = y;
+    }
+
+    public void setUnlocked(boolean unlocked) {
+        this.unlocked = unlocked;
     }
 
     @Override
@@ -31,9 +36,16 @@ public class Exit implements Drawable {
 
     @Override
     public TextureRegion getCurrentAppearance() {
+        if(unlocked){
+            return Textures.EXIT_UNLOCKED;
+        }
         return Textures.EXIT;
     }
-    
+
+    public boolean isUnlocked() {
+        return unlocked;
+    }
+
     @Override
     public float getX() {
         return x;

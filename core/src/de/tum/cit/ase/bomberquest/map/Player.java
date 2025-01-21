@@ -66,7 +66,7 @@ public class Player implements Drawable {
         //body.createFixture(circle, 1.0f);
 
         EdgeShape edgeShape = new EdgeShape();
-        edgeShape.set(startX, startY, startX + 0.6f, startY + 0.6f);
+        edgeShape.set(startX, startY, startX + 0.4f, startY + 0.4f);
         body.createFixture(edgeShape, 1.0f);
 
         // We're done with the shape, so we should dispose of it to free up memory.
@@ -172,6 +172,10 @@ public class Player implements Drawable {
         return bombLimit;
     }
 
+    public int getBlastRadius() {
+        return blastRadius;
+    }
+
     public int getBombsPlaced() {
         return bombsPlaced;
     }
@@ -262,7 +266,7 @@ public class Player implements Drawable {
     }
 
     public void increaseConcurrentBombs() { //该方法需要与bomb连接
-        if (concurrentBombs < 8) concurrentBombs++;
+        if (bombLimit < 8) bombLimit++;
     }
 
 

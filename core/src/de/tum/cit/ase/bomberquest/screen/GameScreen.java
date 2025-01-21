@@ -59,7 +59,7 @@ public class GameScreen implements Screen {
         this.spriteBatch = game.getSpriteBatch();
 
         this.map = game.getMap();
-        this.hud = new Hud(spriteBatch, game.getSkin().getFont("font"), timer);
+        this.hud = new Hud(spriteBatch, game.getSkin().getFont("font"), timer, this.map);
         // Create and configure the camera for the game view
         this.mapCamera = new OrthographicCamera();
         this.mapCamera.setToOrtho(false);
@@ -174,9 +174,7 @@ public class GameScreen implements Screen {
             System.out.println("Rendering bomb at: " + bomb.getX() + ", " + bomb.getY());
             bomb.render(spriteBatch);
             draw(spriteBatch, bomb);
-
         }
-
 
         draw(spriteBatch, map.getChest());
         draw(spriteBatch, map.getPlayer());
@@ -223,7 +221,7 @@ public class GameScreen implements Screen {
     private void drawHUD(){
         //绘制剩余时间
         BitmapFont font = new BitmapFont();
-        font.draw(spriteBatch, "Time left: " +(int)timer.getTimeLeft() + " second(s)", player.getX(), player.getY()+ 30);
+       // font.draw(spriteBatch, "Time left: " +(int)timer.getTimeLeft() + " second(s)", player.getX(), player.getY()+ 30);
     }
 
     private void onGameOver(){
@@ -247,9 +245,6 @@ public class GameScreen implements Screen {
         hud.resize(width, height);
     }
 
-    
-
-
     // Unused methods from the Screen interface
     @Override
     public void pause() {
@@ -267,7 +262,7 @@ public class GameScreen implements Screen {
         BitmapFont font = new BitmapFont();
 
         //将计时器传递给hud
-        hud = new Hud(spriteBatch, font, timer);
+        hud = new Hud(spriteBatch, font, timer, map);
     }
 
     @Override

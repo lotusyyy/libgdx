@@ -31,6 +31,7 @@ public class Bomb implements Drawable {
         //this.explosionSound = Gdx.audio.newSound(Gdx.files.internal("bomb_explosion.mp3"));
         this.explosionRadius = explosionRadius;
         this.exploded = false;
+        player = map.getPlayer();
     }
 
     public void render(SpriteBatch spriteBatch) {
@@ -43,6 +44,8 @@ public class Bomb implements Drawable {
     }
 
     public void update(float delta) {
+        stateTime += delta;
+
         if(!exploded){
             bombTimer -= delta;
             if(bombTimer <= 0.0f){
@@ -78,29 +81,32 @@ public class Bomb implements Drawable {
     }
 
     private void propagateBlast(Direction direction){
-        for(int i = 0; i <= explosionRadius; i++){
-            int targetX = (int) (x + direction.getOffsetX()* i);
-            int targetY = (int) (y + direction.getOffsetY()* i);
+        for(int i = 0; i <= player.getBlastRadius(); i++){
+            int targetX = (int) (x + 0.5f + direction.getOffsetX()* i);
+            int targetY = (int) (y + 0.5f + direction.getOffsetY()* i);
             System.out.println("Target: " + targetX + " " + targetY);
 
             //边界和indestructible wall不能被炸
             if (!map.isPassablePlayer(targetX, targetY)) {
-               // break; // 超出范围，停止传播
+               //break; // 超出范围，停止传播
             }
 
             // 检查并摧毁可摧毁墙
             Wall wall = map.getWallContains(targetX*64, targetY*64);
 
             if (wall != null) {
+                if(!wall.isDestructible()) {
+                    break; // 墙阻挡了爆炸波
+                }
+
                 if (wall.isDestructible() && !wall.isDestroyed()) {
                     map.destroyWall (wall); // 移除墙
                 }
-                break; // 墙阻挡了爆炸波
             }
 
             //检查是否有玩家
             map.getPlayer();//玩家被炸死
-            if(map.isCollision(map.getPlayer(),this)) {
+            if(map.isCollision(map.getPlayer(),new Bomb(targetX, targetY, Textures.BOMB, map, 1))) {
                 map.getPlayer().kill();//玩家死亡
                 map.getGame().goToVictoryAndGameOver(false);
             }
@@ -113,10 +119,13 @@ public class Bomb implements Drawable {
         }
     }
 
-
+    private float stateTime = 0;
     @Override
     public TextureRegion getCurrentAppearance() {
-        return exploded ? Textures.EXPLOSION : Textures.BOMB;
+
+
+
+        return exploded ? Animations.BOMB_EXPLOSION.getKeyFrame(stateTime, true) : Animations.BOMB_DISPLAY.getKeyFrame(stateTime, true);
     }
 
     @Override

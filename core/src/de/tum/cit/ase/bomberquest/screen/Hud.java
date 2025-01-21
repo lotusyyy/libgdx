@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import de.tum.cit.ase.bomberquest.map.GameMap;
 
 import static com.badlogic.gdx.scenes.scene2d.utils.TiledDrawable.draw;
 
@@ -20,8 +21,10 @@ public class Hud {
     /** The camera used to render the HUD. */
     private OrthographicCamera camera;
     private CountdownTimer timer;
-    
-    public Hud(SpriteBatch spriteBatch, BitmapFont font, CountdownTimer timer) {
+    private GameMap map;
+
+    public Hud(SpriteBatch spriteBatch, BitmapFont font, CountdownTimer timer, GameMap map) {
+        this.map = map;
         this.spriteBatch = spriteBatch;
         this.font = font;
         this.camera = new OrthographicCamera();
@@ -53,11 +56,21 @@ public class Hud {
         // Draw the HUD elements
         font.draw(spriteBatch, "Press Esc to Pause!", 10, Gdx.graphics.getHeight() - 10);
         //draw 剩余时间
-        font.draw(spriteBatch, "Time left: " + (int)timer.getTimeLeft() + " second(s)", 10, Gdx.graphics.getHeight() - 20);
-        font.draw(spriteBatch, "Player HUD", hudX,hudY);
+        font.draw(spriteBatch, "Time left: " + (int)timer.getTimeLeft() + " second(s)", 10, Gdx.graphics.getHeight() - 30);
+
+        int x = 10;
+        int y = Gdx.graphics.getHeight() - 50;
+
+        font.draw(spriteBatch, "Bomb blast radius: " + map.getPlayer().getBlastRadius(), x, y);
+        y -= 20;
+        font.draw(spriteBatch, "Concurrent bomb limit: " + map.getPlayer().getBombLimit(), x, y);
+        y -= 20;
+        font.draw(spriteBatch, "Remaining enemies: " + map.getEnemies().size(), x, y);
+        y -= 20;
+        font.draw(spriteBatch, "Exit unlocked: " + (map.getEnemies().size() == 0?"Yes":"No"), x, y);
+
         // Finish drawing
         spriteBatch.end();
-
     }
 
     public void dispose(){

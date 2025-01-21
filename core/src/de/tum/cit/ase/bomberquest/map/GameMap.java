@@ -181,6 +181,14 @@ public class GameMap {
         doPhysicsStep(frameTime);
         updateBombs(frameTime);
         updateEnemies(frameTime);
+
+        for(PowerUp powerUp : new ArrayList<>(powerUps)){
+            //System.out.println("Power Up " + powerUp.getX() + ", " + powerUp.getY() + ", " + isReveal(powerUp));
+            if(isReveal(powerUp) && isCollision(player, powerUp)){
+                powerUp.applyEffect(player);
+                powerUps.remove(powerUp);
+            }
+        }
     }
     
     /**
@@ -247,7 +255,7 @@ public class GameMap {
                     Rectangle r2 = new Rectangle((int)(p2.x*64), (int)(p2.y*64)-64, 64,64);
 
                     if(r1.intersects(r2)){
-                        //System.out.println(r1 + " " + r2);
+                        System.out.println(r1 + " " + r2);
                         return false;
                     }
                 }
@@ -292,13 +300,13 @@ public class GameMap {
         for(int i=0;i<walls.length;i++){
             for(int j=0;j<walls[i].length;j++){
                 Wall wall = walls[i][j];
-                if(i == 10 && j== 0){
+                if(i == 9 && j== 0){
                     //System.out.println(x + " " + y);
                     //System.out.println(wall.getX()*64 );
                     //System.out.println(wall.getX()*64 + wall.getWidth()*64 );
-                    //System.out.println(wall.getY()*64 );
+                   // System.out.println(wall.getY()*64 );
                     //System.out.println(wall.getY()*64 + wall.getHeight()*64);
-                    //System.out.println(contains(wall, x, y));
+                   // System.out.println(contains(wall, x, y));
                 }
                 if(wall != null && !wall.isDestroyed() && wall.isDestructible() && contains(wall, x, y)){
                     return wall;
@@ -403,9 +411,15 @@ public class GameMap {
             }
         }
     }
+
     public void killEnemy(Enemy enemy) {
         enemies.remove(enemy);
+
+        if(enemies.size() == 0){
+            exit.setUnlocked(true);
+        }
     }
+
     public void updateEnemies(float delta) {
         for (Enemy enemy : enemies) {
             enemy.update(delta); // 假设 Enemy 类有 update 方法
