@@ -18,7 +18,7 @@ public class Enemy extends GameObject {
 
     private Body hitbox;
     private GameMap map;
-    private float speed = 1f;  // 可调整
+    private float speed = 0.6f;  // 可调整
     private boolean alive = true;
     private Random random = new Random(); //用于生成随机数来控制敌人的随机移动。
     private Animation<TextureRegion> currentAnimation;
