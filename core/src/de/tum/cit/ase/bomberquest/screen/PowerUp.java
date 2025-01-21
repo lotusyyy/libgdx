@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import de.tum.cit.ase.bomberquest.audio.MusicTrack;
 import de.tum.cit.ase.bomberquest.map.Player;
 import de.tum.cit.ase.bomberquest.texture.Drawable;
 import de.tum.cit.ase.bomberquest.texture.Textures;
@@ -70,6 +71,8 @@ public class PowerUp implements Drawable{
 
 
     public void applyEffect(Player player) {
+        MusicTrack.COLLECT.play();
+
         switch (type) {
             case BLAST_RADIUS:
                 player.increaseBlastRadius();

@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import de.tum.cit.ase.bomberquest.audio.MusicTrack;
 import de.tum.cit.ase.bomberquest.screen.VictoryAndGameOverScreen;
 import de.tum.cit.ase.bomberquest.texture.Animations;
 import de.tum.cit.ase.bomberquest.texture.Drawable;
@@ -218,6 +219,8 @@ public class Player  extends  GameObject {
                 // 增加当前放置的炸弹数量
                 bombsPlaced++;
                 System.out.println("Bomb placed successfully!");
+
+                MusicTrack.DROP.play();
             }
         }catch (Exception e) {
             e.printStackTrace();

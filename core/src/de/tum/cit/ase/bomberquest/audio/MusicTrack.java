@@ -13,17 +13,28 @@ import com.badlogic.gdx.audio.Music;
  */
 public enum MusicTrack {
     
-    BACKGROUND("background.mp3", 0.2f);
-    
+    BACKGROUND("background.mp3", 0.2f, true),
+    WIN("win.mp3", 0.2f),
+    LOSE("lose.mp3", 0.2f),
+    EXPLODE("explode.mp3", 0.2f),
+    DROP("drop.mp3", 0.2f),
+    COLLECT("collect.mp3", 0.2f);
+
     /** The music file owned by this variant. */
     private final Music music;
     
-    MusicTrack(String fileName, float volume) {
+    MusicTrack(String fileName, float volume, boolean looping) {
         this.music = Gdx.audio.newMusic(Gdx.files.internal("audio/" + fileName));
-        this.music.setLooping(true);
+        this.music.setLooping(looping);
         this.music.setVolume(volume);
     }
-    
+
+    MusicTrack(String fileName, float volume ) {
+        this.music = Gdx.audio.newMusic(Gdx.files.internal("audio/" + fileName));
+        this.music.setLooping(false);
+        this.music.setVolume(volume);
+    }
+
     /**
      * Play this music track.
      * This will not stop other music from playing - if you add more tracks, you will have to handle that yourself.

@@ -3,6 +3,7 @@ package de.tum.cit.ase.bomberquest.map;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import de.tum.cit.ase.bomberquest.audio.MusicTrack;
 import de.tum.cit.ase.bomberquest.screen.VictoryAndGameOverScreen;
 import de.tum.cit.ase.bomberquest.texture.Animations;
 import de.tum.cit.ase.bomberquest.texture.Drawable;
@@ -62,6 +63,9 @@ public class Bomb extends GameObject {
 
     private void explode(){
         if(!exploded){
+
+            MusicTrack.EXPLODE.play();
+
             this.exploded = true;
             playExplosionAniation();
             generateBlast();//触发爆炸波

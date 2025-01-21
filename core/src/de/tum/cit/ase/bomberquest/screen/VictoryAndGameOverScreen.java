@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import de.tum.cit.ase.bomberquest.BomberQuestGame;
+import de.tum.cit.ase.bomberquest.audio.MusicTrack;
 
 public class VictoryAndGameOverScreen implements Screen{
     private BomberQuestGame game;
@@ -20,6 +21,7 @@ public class VictoryAndGameOverScreen implements Screen{
     public VictoryAndGameOverScreen(BomberQuestGame game, boolean won) {
         this.game = game;
         this.won = won;
+
     }
 
     @Override
@@ -101,8 +103,5 @@ public class VictoryAndGameOverScreen implements Screen{
         this.stage = stage;
     }
 
-    public void setWon(boolean won) {
-        this.won = won;
-        game.goToVictoryAndGameOver(won);
-    }
+
 }

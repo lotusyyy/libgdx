@@ -176,7 +176,15 @@ public class BomberQuestGame extends Game {
     /**
      * Switches to the VictoryAndGameOver screen
      */
-    public void goToVictoryAndGameOver(boolean won){this.setScreen(new VictoryAndGameOverScreen(this, won));}
+    public void goToVictoryAndGameOver(boolean won){
+        this.setScreen(new VictoryAndGameOverScreen(this, won));
+
+        if(won){
+            MusicTrack.WIN.play();
+        }else {
+            MusicTrack.LOSE.play();
+        }
+    }
 
     /** Returns the skin for UI elements. */
     public Skin getSkin() {
