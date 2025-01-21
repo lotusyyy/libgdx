@@ -6,6 +6,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import de.tum.cit.ase.bomberquest.BomberQuestGame;
+import de.tum.cit.ase.bomberquest.screen.PowerUp;
+import de.tum.cit.ase.bomberquest.screen.PowerUpType;
 import de.tum.cit.ase.bomberquest.texture.Drawable;
 
 import java.awt.*;
@@ -57,9 +59,10 @@ public class GameMap {
     private final Wall[][] walls;
     private List<Enemy> enemies = new ArrayList<>();
     private List<Bomb> bombs = new ArrayList<>();
+    private List<PowerUp> powerUps = new ArrayList<>();
 
     private Vector2 entrance;//Vector2是二维向量
-    private Vector2 exit;
+    private Exit exit;
     private boolean exitRevealed = false;
 
     
@@ -123,19 +126,26 @@ public class GameMap {
                     enemies.add(enemy);
                     break;
                 case 4: // 出口
-                    this.exit = new Vector2(x, y);
+                    this.exit = new Exit(x, y);
+                    walls[y][x] = new Wall(x, y, true); // 需要破坏墙才能获取
                     break;
                 case 5: // 增加炸弹数量道具
+                    powerUps.add(new PowerUp(x, y, PowerUpType.CONCURRENT_BOMBS));
+                    walls[y][x] = new Wall(x, y, true); // 需要破坏墙才能获取
+                    break;
                 case 6: // 增加爆炸范围道具
+                    powerUps.add(new PowerUp(x, y, PowerUpType.BLAST_RADIUS));
                     walls[y][x] = new Wall(x, y, true); // 需要破坏墙才能获取
                     break;
             }
         }
+
         // Create a player with initial position (1, 3)
         this.player = new Player(this.world, entrance.x, entrance.y, this);//入口位置
 
         // 如果没有出口，随机设置一个
         if (this.exit == null) {
+            System.out.println("No Exit");
             addRandomExit();
         }
     }
@@ -151,11 +161,14 @@ public class GameMap {
         }
         if (!destructibleWalls.isEmpty()) {
             Vector2 randomWall = destructibleWalls.get((int) (Math.random() * destructibleWalls.size()));
-            this.exit = randomWall; // 设置随机出口
+            this.exit = new Exit((int)randomWall.x, (int)randomWall.y);
         }
     }
 
-    
+    public boolean isReveal(Drawable d){
+        return walls[(int)d.getY()][(int)d.getX()] == null;
+    }
+
     /**
      * Updates the game state. This is called once per frame.
      * Every dynamic object in the game should update its state here.
@@ -185,10 +198,11 @@ public class GameMap {
 
     //检查出口是否被揭示
     public void revealExitIfNecessary(int x, int y){
-        if(!exitRevealed && exit.x == x && exit.y ==y){
+        if(!exitRevealed && exit.getX() == x && exit.getY() ==y){
             exitRevealed = true;
         }
     }
+
     //检查指定位置是否可以通行
     public boolean isPassable(int x, int y){
         // 检查坐标是否在地图范围内
@@ -229,7 +243,7 @@ public class GameMap {
                     Vector2 p1 = new Vector2(targetX, targetY);
                     Vector2 p2 = wall.getPosition();
 
-                    Rectangle r1 = new Rectangle((int)(p1.x*64), (int)(p1.y*64)-38, 38,38);
+                    Rectangle r1 = new Rectangle((int)(p1.x*64), (int)(p1.y*64-player.getHeight()*64), (int)(player.getWidth()*64),(int)(player.getHeight()*64));
                     Rectangle r2 = new Rectangle((int)(p2.x*64), (int)(p2.y*64)-64, 64,64);
 
                     if(r1.intersects(r2)){
@@ -257,6 +271,10 @@ public class GameMap {
     /** Returns the flowers on the map. */
     public List<Flowers> getFlowers() {
         return Arrays.stream(flowers).flatMap(Arrays::stream).toList();
+    }
+
+    public List<PowerUp> getPowerUps() {
+        return new ArrayList<>(powerUps);
     }
 
     public Wall[][] getWalls() {
@@ -324,7 +342,7 @@ public class GameMap {
         return entrance;
     }
 
-    public Vector2 getExit() {
+    public Exit getExit() {
         return exit;
     }
 

@@ -63,6 +63,7 @@ public class Animations {
             SpriteSheet.ENEMY.at(7, 8),
             SpriteSheet.ENEMY.at(7, 9)
     );
+
     public static final Animation<TextureRegion> BOMB_EXPLOSION = new Animation<>(0.1f,
             SpriteSheet.BOMB.at(5, 1),
             SpriteSheet.BOMB.at(5, 2),

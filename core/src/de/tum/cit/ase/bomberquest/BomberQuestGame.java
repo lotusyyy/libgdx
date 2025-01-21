@@ -162,6 +162,7 @@ public class BomberQuestGame extends Game {
      * Switches to the game screen.
      */
     public void goToGame() {
+        create();
         currentGameScreen = new GameScreen(this, this.map);
         this.setScreen(currentGameScreen); // Set the current screen to GameScreen
     }

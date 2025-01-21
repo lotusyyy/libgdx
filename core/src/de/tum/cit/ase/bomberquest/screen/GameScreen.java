@@ -73,7 +73,8 @@ public class GameScreen implements Screen {
      */
     @Override
     public void render(float deltaTime) {
-        updateGameLogic(deltaTime);//更新游戏逻辑
+        //updateGameLogic(deltaTime);//更新游戏逻辑
+
         //渲染HUD （剩余时间）
         spriteBatch.begin();
         drawHUD();
@@ -97,13 +98,13 @@ public class GameScreen implements Screen {
         
         // Update the map state
         map.tick(frameTime);
-        
+
         // Update the camera
         updateCamera();
 
         //update玩家输入
         player.handleInput();
-        
+
         // Render the map on the screen
         renderMap();
         
@@ -142,12 +143,19 @@ public class GameScreen implements Screen {
         // Render everything in the map here, in order from lowest to highest (later things appear on top)
         // You may want to add a method to GameMap to return all the drawables in the correct order
 
-
-
         //flowers
         for (Flowers flowers : map.getFlowers()) {
             draw(spriteBatch, flowers);
         }
+
+        //powerups
+        for(PowerUp powerUp : map.getPowerUps()){
+            draw(spriteBatch, powerUp);
+        }
+
+        //exit
+        draw(spriteBatch, map.getExit());
+
         //walls
         for (int y = 0; y < map.getWalls().length; y++) {
             for (int x = 0; x < map.getWalls()[y].length; x++) {
@@ -221,7 +229,9 @@ public class GameScreen implements Screen {
     private void onGameOver(){
         System.out.println("Time out, game failed! ");
         //切换到游戏失败界面or主页面
+        game.goToVictoryAndGameOver(false);
     }
+
     /**
      * Called when the window is resized.
      * This is where the camera is updated to match the new window size.

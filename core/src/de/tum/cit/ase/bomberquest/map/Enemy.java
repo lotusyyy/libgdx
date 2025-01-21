@@ -41,6 +41,7 @@ public class Enemy implements Drawable {
         return 1;
     }
 
+
     private Body createHitbox(World world, float x, float y) {
         BodyDef bodyDef = new BodyDef();
         bodyDef.position.set(x, y);
@@ -122,9 +123,7 @@ public class Enemy implements Drawable {
 
     @Override
     public TextureRegion getCurrentAppearance() {
-
         return currentAnimation.getKeyFrame(stateTime, true);
-
     }
 
     @Override

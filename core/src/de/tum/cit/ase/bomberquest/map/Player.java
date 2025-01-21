@@ -113,7 +113,8 @@ public class Player implements Drawable {
             yVelocity = 0;
         }
 
-        //计算目标位置
+        //计算目标位置\
+        frameTime = 0.2f;
         float targetX = this.getX() + xVelocity * frameTime;
         float targetY = this.getY() + yVelocity * frameTime;
 

@@ -10,7 +10,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 public class Textures {
     
     public static final TextureRegion FLOWERS = SpriteSheet.BASIC_TILES.at(2, 5);
-
+    public static final TextureRegion EXIT = SpriteSheet.BASIC_TILES.at(4, 8);
     public static final TextureRegion CHEST = SpriteSheet.BASIC_TILES.at(5, 5);
 
     //新添加 walls
