@@ -171,9 +171,12 @@ public class GameScreen implements Screen {
         }
         //bombs
         for (Bomb bomb : map.getBombs()) {
-            System.out.println("Rendering bomb at: " + bomb.getX() + ", " + bomb.getY());
-            bomb.render(spriteBatch);
-            draw(spriteBatch, bomb);
+            // System.out.println("Rendering bomb at: " + bomb.getX() + ", " + bomb.getY());
+            //bomb.render(spriteBatch);
+            if(bomb.getExplosionTimer() < 0.8f)
+            draw2(spriteBatch, bomb);
+            else
+                draw(spriteBatch, bomb);
         }
 
         draw(spriteBatch, map.getPlayer());
@@ -202,6 +205,23 @@ public class GameScreen implements Screen {
         }
         spriteBatch.draw(texture, x, y, width, height);
     }
+
+    private static void draw2(SpriteBatch spriteBatch, Drawable drawable) {
+        TextureRegion texture = drawable.getCurrentAppearance();
+        // Drawable coordinates are in tiles, so we need to scale them to pixels
+        float x = drawable.getX() * TILE_SIZE_PX * SCALE - 64 *2.0f;
+        float y = drawable.getY() * TILE_SIZE_PX * SCALE - 64 *2.0f;
+        // Additionally scale everything by the game scale
+        float width = texture.getRegionWidth() * SCALE;
+        float height = texture.getRegionHeight() * SCALE;
+
+        if(drawable instanceof  Player){
+            width = 8 * SCALE;
+            height = 13 * SCALE;
+        }
+        spriteBatch.draw(texture, x, y, width, height);
+    }
+
 
     //更新游戏逻辑
     private void updateGameLogic(float deltaTime){

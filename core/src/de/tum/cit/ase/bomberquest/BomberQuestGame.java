@@ -64,6 +64,9 @@ public class BomberQuestGame extends Game {
         if (currentGameScreen != null) {
             // 设置当前屏幕为游戏屏幕，恢复游戏
             setScreen(currentGameScreen);
+
+            MusicTrack.BACKGROUND_MENU.stop(); // Play some background music
+            MusicTrack.BACKGROUND.play(); // Play some background music
         }
     }
 
@@ -96,7 +99,7 @@ public class BomberQuestGame extends Game {
             Gdx.app.exit();//如果地图加载失败，退出游戏
         }
         BitmapFont font = new BitmapFont();
-        MusicTrack.BACKGROUND.play(); // Play some background music
+
         goToMenu(); // Navigate to the menu screen
     }
 
@@ -142,6 +145,9 @@ public class BomberQuestGame extends Game {
 
                 currentGameScreen = new GameScreen(BomberQuestGame.this, map);
                 setScreen(currentGameScreen); // Set the current screen to GameScreen
+
+                MusicTrack.BACKGROUND_MENU.stop(); // Play some background music
+                MusicTrack.BACKGROUND.play(); // Play some background music
             }
 
             @Override
@@ -161,6 +167,9 @@ public class BomberQuestGame extends Game {
      */
     public void goToMenu() {
         this.setScreen(new MenuScreen(this)); // Set the current screen to MenuScreen
+
+        MusicTrack.BACKGROUND.stop(); // Play some background music
+        MusicTrack.BACKGROUND_MENU.play(); // Play some background music
     }
 
     /**
@@ -170,6 +179,9 @@ public class BomberQuestGame extends Game {
         create();
         currentGameScreen = new GameScreen(this, this.map);
         this.setScreen(currentGameScreen); // Set the current screen to GameScreen
+
+        MusicTrack.BACKGROUND_MENU.stop(); // Play some background music
+        MusicTrack.BACKGROUND.play(); // Play some background music
     }
 
     //新添加:

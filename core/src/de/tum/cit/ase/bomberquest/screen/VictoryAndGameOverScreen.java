@@ -49,6 +49,9 @@ public class VictoryAndGameOverScreen implements Screen{
             @Override
             public void changed(ChangeEvent event, com.badlogic.gdx.scenes.scene2d.Actor actor) {
                 game.setScreen(new MenuScreen(game)); // 当按钮被点击时，更改屏幕到主菜单。
+
+                MusicTrack.BACKGROUND_MENU.play(); // Play some background music
+                MusicTrack.BACKGROUND.stop(); // Play some background music
             }
         });
     }

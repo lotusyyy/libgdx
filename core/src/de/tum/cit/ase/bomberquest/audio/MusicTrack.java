@@ -14,6 +14,7 @@ import com.badlogic.gdx.audio.Music;
 public enum MusicTrack {
     
     BACKGROUND("background.mp3", 0.2f, true),
+    BACKGROUND_MENU("background_menu.mp3", 0.2f, true),
     WIN("win.mp3", 0.2f),
     LOSE("lose.mp3", 0.2f),
     EXPLODE("explode.mp3", 0.2f),
@@ -41,5 +42,9 @@ public enum MusicTrack {
      */
     public void play() {
        this.music.play();
+    }
+
+    public void stop(){
+        this.music.stop();
     }
 }

@@ -65,16 +65,15 @@ public class Animations {
     );
 
     public static final Animation<TextureRegion> BOMB_EXPLOSION = new Animation<>(0.1f,
-            SpriteSheet.BOMB.at(5, 1),
-            SpriteSheet.BOMB.at(5, 2),
-            SpriteSheet.BOMB.at(5, 3),
-            SpriteSheet.BOMB.at(5, 4)
+            SpriteSheet.BOMB2.at2(1, 1),
+            SpriteSheet.BOMB2.at2(1 ,2),
+            SpriteSheet.BOMB2.at2(1, 1),
+            SpriteSheet.BOMB2.at2(1, 2)
     );
 
     public static final Animation<TextureRegion> BOMB_DISPLAY = new Animation<>(0.1f,
             SpriteSheet.BOMB.at(4, 1),
             SpriteSheet.BOMB.at(4, 2),
             SpriteSheet.BOMB.at(4, 3)
-
     );
 }

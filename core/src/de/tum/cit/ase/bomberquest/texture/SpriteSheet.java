@@ -21,8 +21,8 @@ public enum SpriteSheet {
     BASIC_TILES("basictiles.png", 16, 16),
     ENEMY("mobs.png", 16, 16),
     BOMB("original-bomberman.png", 16,16),
-    Power_Up("objects.png", 16,16);
-
+    Power_Up("objects.png", 16,16),
+    BOMB2("original-bomberman.png", 16 * 5,16 * 5);
     
     private final Texture spritesheet;
     private final int width;
@@ -61,5 +61,14 @@ public enum SpriteSheet {
                 this.height
         );
     }
-    
+
+    public TextureRegion at2(int row, int column) {
+        return new TextureRegion(
+                spritesheet,
+                (column - 1) * this.width,
+                (row - 1) * this.height + 16 * 4,
+                this.width,
+                this.height
+        );
+    }
 }

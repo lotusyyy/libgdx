@@ -23,6 +23,10 @@ public class Bomb extends GameObject {
     public static VictoryAndGameOverScreen victoryAndGameOverScreen;
     private Player player;
 
+    public float getExplosionTimer() {
+        return bombTimer;
+    }
+
     public Bomb(float x, float y, TextureRegion bombTexture, GameMap map, int explosionRadius) {
         super(x, y);
         this.map = map;
@@ -37,9 +41,9 @@ public class Bomb extends GameObject {
         float x = getX();
         float y = getY();
 
-        if (exploded) {
+        if ( bombTimer < 0.8f) {
             TextureRegion frame = explosionAnimation.getKeyFrame(explosionDuration - explosionTimer, false);
-            spriteBatch.draw(frame, x, y, 1, 1); // 根据炸弹大小设置宽高
+            spriteBatch.draw(frame, x - 16 *2.5f, y, 1, 1); // 根据炸弹大小设置宽高
         } else {
             spriteBatch.draw(bombTexture, x, y, 1, 1); // 炸弹图像
         }
@@ -131,10 +135,7 @@ public class Bomb extends GameObject {
     private float stateTime = 0;
     @Override
     public TextureRegion getCurrentAppearance() {
-
-
-
-        return exploded ? Animations.BOMB_EXPLOSION.getKeyFrame(stateTime, true) : Animations.BOMB_DISPLAY.getKeyFrame(stateTime, true);
+        return bombTimer < 0.8f ? Animations.BOMB_EXPLOSION.getKeyFrame(stateTime, true) : Animations.BOMB_DISPLAY.getKeyFrame(stateTime, true);
     }
 
     public boolean isExploded() {
