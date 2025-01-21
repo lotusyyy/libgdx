@@ -63,6 +63,10 @@ public class Enemy extends GameObject {
         }
     }
 
+    public void reverseVelocity(){
+        randomVelocity();
+    }
+
     public void randomVelocity(){
         // 随机选择新的移动方向
         int moveDirection = random.nextInt(4);

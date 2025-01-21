@@ -193,8 +193,10 @@ public class BomberQuestGame extends Game {
 
         if(won){
             MusicTrack.WIN.play();
+            MusicTrack.BACKGROUND.stop();
         }else {
             MusicTrack.LOSE.play();
+            MusicTrack.BACKGROUND.stop();
         }
     }
 

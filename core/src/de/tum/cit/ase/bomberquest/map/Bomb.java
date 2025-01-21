@@ -97,7 +97,7 @@ public class Bomb extends GameObject {
         for(int i = 0; i <= player.getBlastRadius(); i++){
             int targetX = (int) (x + 0.5f + direction.getOffsetX()* i);
             int targetY = (int) (y + 0.5f + direction.getOffsetY()* i);
-            System.out.println("Target: " + targetX + " " + targetY);
+            //System.out.println("Target: " + targetX + " " + targetY);
 
             //边界和indestructible wall不能被炸
             if (!map.isPassablePlayer(targetX, targetY)) {

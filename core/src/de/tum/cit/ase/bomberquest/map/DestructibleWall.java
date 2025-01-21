@@ -29,6 +29,7 @@ public class DestructibleWall extends Wall {
     public void destroy(){
         destroyed = true;
     }
+
     //check whether the destructible wall is destroyed or not
     public boolean isDestroyed(){
         return destroyed;

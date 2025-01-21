@@ -197,8 +197,8 @@ public class GameMap {
 
             for(Enemy enemy2 : enemies){
                 if(enemy != enemy2 && isCollision(enemy, enemy2)){
-                    enemy.randomVelocity();
-                    enemy2.randomVelocity();
+                    enemy.reverseVelocity();
+                    enemy2.reverseVelocity();
                     break;
                 }
             }
