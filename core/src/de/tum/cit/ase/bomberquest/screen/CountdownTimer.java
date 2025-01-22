@@ -8,6 +8,7 @@ public class CountdownTimer {
     private Timer.Task timerTask;
     BomberQuestGame game;
     private boolean isGameOver = false;
+    private boolean pause;
 
     public CountdownTimer(float initialTime) {
         this.timeLeft = initialTime;
@@ -22,10 +23,19 @@ public class CountdownTimer {
     public CountdownTimer() {
     }
 
+    public void setPause(boolean pause) {
+        this.pause = pause;
+    }
+
     //启用计时器
     public void start(){
        timerTask = new Timer.Task() {
            public void run() {
+               if(pause
+               ){
+                   return;
+               }
+
                if(timeLeft > 0) {
                    timeLeft -= 1;
                }else{

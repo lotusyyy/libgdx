@@ -63,6 +63,9 @@ public class GameScreen implements Screen {
         this.mapCamera.setToOrtho(false);
         Vector2 entrance = map.getEntrance();
         this.player = map.getPlayer();
+
+        timer = new CountdownTimer(300);//初始化计时器，300s
+        timer.start();
     }
 
     /**
@@ -208,7 +211,6 @@ public class GameScreen implements Screen {
     }
 
     private static void draw2(SpriteBatch spriteBatch, Bomb bomb) {
-        int radius = bomb.getMap().getPlayer().getBlastRadius();
 
         TextureRegion texture = bomb.getCurrentAppearance();
         float x = bomb.getX() * TILE_SIZE_PX * SCALE;
@@ -217,31 +219,30 @@ public class GameScreen implements Screen {
         TextureRegion center = new TextureRegion(texture, 32, 32, 16, 16);
         spriteBatch.draw(center, x, y, 64, 64);
 
+        int radius = bomb.getBlastRadius().get(Direction.UP);
         for (int i = 0; i < radius; i++) {
             TextureRegion top = new TextureRegion(texture, 32, 16, 16, 16);
             spriteBatch.draw(top, x, y + 64 * i + 64, 64, 64);
-
-            TextureRegion down = new TextureRegion(texture, 32, 48, 16, 16);
-            spriteBatch.draw(down, x, y - 64 * i - 64, 64, 64);
-
-            TextureRegion left = new TextureRegion(texture, 16, 32, 16, 16);
-            spriteBatch.draw(left, x- 64 * i - 64, y  , 64, 64);
-
-            TextureRegion right = new TextureRegion(texture, 48, 32, 16, 16);
-            spriteBatch.draw(right, x+ 64 * i + 64, y  , 64, 64);
-
         }
 
-        // Drawable coordinates are in tiles, so we need to scale them to pixels
-        x = bomb.getX() * TILE_SIZE_PX * SCALE - 64 * 2.0f;
-        y = bomb.getY() * TILE_SIZE_PX * SCALE - 64 * 2.0f;
-        // Additionally scale everything by the game scale
-        float width = texture.getRegionWidth() * SCALE;
-        float height = texture.getRegionHeight() * SCALE;
+        radius = bomb.getBlastRadius().get(Direction.DOWN);
+        for (int i = 0; i < radius; i++) {
+            TextureRegion down = new TextureRegion(texture, 32, 48, 16, 16);
+            spriteBatch.draw(down, x, y - 64 * i - 64, 64, 64);
+        }
 
+        radius = bomb.getBlastRadius().get(Direction.LEFT);
+        for (int i = 0; i < radius; i++) {
+            TextureRegion left = new TextureRegion(texture, 16, 32, 16, 16);
+            spriteBatch.draw(left, x- 64 * i - 64, y  , 64, 64);
+        }
 
+        radius = bomb.getBlastRadius().get(Direction.RIGHT);
+        for (int i = 0; i < radius; i++) {
+            TextureRegion right = new TextureRegion(texture, 48, 32, 16, 16);
+            spriteBatch.draw(right, x+ 64 * i + 64, y, 64, 64);
+        }
     }
-
 
     //更新游戏逻辑
     private void updateGameLogic(float deltaTime) {
@@ -285,20 +286,26 @@ public class GameScreen implements Screen {
         hud.resize(width, height);
     }
 
+    public CountdownTimer getTimer() {
+        return timer;
+    }
+
     // Unused methods from the Screen interface
     @Override
     public void pause() {
+        timer.setPause(true);
     }
 
     @Override
     public void resume() {
+        timer.setPause(false);
     }
 
     @Override
     public void show() {
         spriteBatch = new SpriteBatch();
-        timer = new CountdownTimer(300);//初始化计时器，300s
-        timer.start();
+
+        timer.setPause(false);
         BitmapFont font = new BitmapFont();
 
         //将计时器传递给hud

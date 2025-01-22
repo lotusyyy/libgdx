@@ -444,6 +444,16 @@ public class GameMap {
         return null;
     }
 
+    public Enemy getEnemyAt2(int x, int y) {
+        // 遍历敌人列表并检查位置是否匹配
+        for (Enemy enemy : enemies) {
+            if (isCollision(enemy, new Flowers(x, y))) {
+                return enemy;
+            }
+        }
+        return null;
+    }
+
     //杀死某个位置的敌人
     public void killEnemyAt(int x, int y) {
         Iterator<Enemy> iterator = enemies.iterator();

@@ -6,8 +6,10 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import de.tum.cit.ase.bomberquest.audio.MusicTrack;
 import de.tum.cit.ase.bomberquest.screen.VictoryAndGameOverScreen;
 import de.tum.cit.ase.bomberquest.texture.Animations;
-import de.tum.cit.ase.bomberquest.texture.Drawable;
 import de.tum.cit.ase.bomberquest.texture.Textures;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class Bomb extends GameObject {
 
@@ -44,9 +46,9 @@ public class Bomb extends GameObject {
         float x = getX();
         float y = getY();
 
-        if ( bombTimer < 0.8f) {
+        if (bombTimer < 0.8f) {
             TextureRegion frame = explosionAnimation.getKeyFrame(explosionDuration - explosionTimer, false);
-            spriteBatch.draw(frame, x - 16 *2.5f, y, 1, 1); // 根据炸弹大小设置宽高
+            spriteBatch.draw(frame, x - 16 * 2.5f, y, 1, 1); // 根据炸弹大小设置宽高
         } else {
             spriteBatch.draw(bombTexture, x, y, 1, 1); // 炸弹图像
         }
@@ -55,21 +57,21 @@ public class Bomb extends GameObject {
     public void update(float delta) {
         stateTime += delta;
 
-        if(!exploded){
+        if (!exploded) {
             bombTimer -= delta;
-            if(bombTimer <= 0.0f){
+            if (bombTimer <= 0.0f) {
                 explode();
             }
-        }else{
+        } else {
             explosionTimer -= delta;
-            if(explosionTimer <= 0.0f){
+            if (explosionTimer <= 0.0f) {
                 setExploded(true);
             }
         }
     }
 
-    private void explode(){
-        if(!exploded){
+    private void explode() {
+        if (!exploded) {
 
             MusicTrack.EXPLODE.play();
 
@@ -77,65 +79,107 @@ public class Bomb extends GameObject {
             playExplosionAniation();
             generateBlast();//触发爆炸波
             setExploded(true);
-           // explosionSound.play();
+            // explosionSound.play();
         }
     }
 
-    private void playExplosionAniation(){
+    private void playExplosionAniation() {
         explosionAnimation = Animations.BOMB_EXPLOSION;
         explosionTimer = explosionDuration;
     }
 
-    private void generateBlast(){
-        for(Direction direction : Direction.values()){
+    private void generateBlast() {
+        for (Direction direction : Direction.values()) {
             propagateBlast(direction);
         }
     }
 
-    private void propagateBlast(Direction direction){
+    public Map<Direction, Integer> getBlastRadius() {
+        Map<Direction, Integer> directionIntegerMap = new HashMap<>();
+
+        for (Direction direction : Direction.values()) {
+            directionIntegerMap.put(direction, propagateBlast2(direction));
+        }
+
+        return directionIntegerMap;
+    }
+
+    private int propagateBlast(Direction direction) {
         float x = getX();
         float y = getY();
 
-
-        for(int i = 0; i <= player.getBlastRadius(); i++){
-            int targetX = (int) (x + 0.5f + direction.getOffsetX()* i);
-            int targetY = (int) (y + 0.5f + direction.getOffsetY()* i);
+        for (int i = 0; i <= player.getBlastRadius(); i++) {
+            int targetX = (int) (x + direction.getOffsetX() * i);
+            int targetY = (int) (y + direction.getOffsetY() * i);
             //System.out.println("Target: " + targetX + " " + targetY);
 
             //边界和indestructible wall不能被炸
             if (!map.isPassablePlayer(targetX, targetY)) {
-               //break; // 超出范围，停止传播
+                //break; // 超出范围，停止传播
             }
 
             // 检查并摧毁可摧毁墙
-            Wall wall = map.getWallContains(targetX*64, targetY*64);
+            Wall wall = map.getWallContains(targetX * 64, targetY * 64);
 
             if (wall != null) {
-                if(!wall.isDestructible()) {
-                    break; // 墙阻挡了爆炸波
+                if (!wall.isDestructible()) {
+                    return i;
+                    //break; // 墙阻挡了爆炸波
                 }
 
                 if (wall.isDestructible() && !wall.isDestroyed()) {
-                    map.destroyWall (wall); // 移除墙
+                    map.destroyWall(wall); // 移除墙
                 }
             }
 
             //检查是否有玩家
             map.getPlayer();//玩家被炸死
-            if(map.isCollision(map.getPlayer(),new Bomb(targetX, targetY, Textures.BOMB, map, 1))) {
+            if (map.isCollision(map.getPlayer(), new Bomb(targetX, targetY, Textures.BOMB, map, 1))) {
                 map.getPlayer().kill();//玩家死亡
                 map.getGame().goToVictoryAndGameOver(false);
             }
 
             //检查是否有敌人
-            Enemy enemy = map.getEnemyAt(targetX*64, targetY*64);
-            if(enemy != null){
+            Enemy enemy = map.getEnemyAt2(targetX, targetY);
+            if (enemy != null) {
                 map.killEnemy(enemy);
             }
         }
+
+        return player.getBlastRadius();
     }
 
+    private int propagateBlast2(Direction direction) {
+        float x = getX();
+        float y = getY();
+
+        for (int i = 0; i <= player.getBlastRadius(); i++) {
+            int targetX = (int) (x + direction.getOffsetX() * i);
+            int targetY = (int) (y + direction.getOffsetY() * i);
+            //System.out.println("Target: " + targetX + " " + targetY);
+
+            //边界和indestructible wall不能被炸
+            if (!map.isPassablePlayer(targetX, targetY)) {
+                //break; // 超出范围，停止传播
+            }
+
+            // 检查并摧毁可摧毁墙
+            Wall wall = map.getWallContains(targetX * 64, targetY * 64);
+
+            if (wall != null) {
+                if (!wall.isDestructible()) {
+                    return i-1;
+                    //break; // 墙阻挡了爆炸波
+                }
+            }
+        }
+
+        return player.getBlastRadius();
+    }
+
+
     private float stateTime = 0;
+
     @Override
     public TextureRegion getCurrentAppearance() {
         return bombTimer < 0.8f ? Animations.BOMB_EXPLOSION.getKeyFrame(stateTime, true) : Animations.BOMB_DISPLAY.getKeyFrame(stateTime, true);

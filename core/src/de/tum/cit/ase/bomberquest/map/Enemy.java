@@ -16,7 +16,7 @@ import java.util.Random;
 
 public class Enemy extends GameObject {
 
-    private Body hitbox;
+    private final Body hitbox;
     private GameMap map;
     private float speed = 0.6f;  // 可调整
     private boolean alive = true;

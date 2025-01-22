@@ -57,13 +57,12 @@ public class BomberQuestGame extends Game {
     //新添加：
     private GameScreen currentGameScreen;
 
-    //计时器
-    private CountdownTimer timer;
-
     public void continueGame() {
         if (currentGameScreen != null) {
             // 设置当前屏幕为游戏屏幕，恢复游戏
             setScreen(currentGameScreen);
+
+            currentGameScreen.getTimer().setPause(false);
 
             MusicTrack.BACKGROUND_MENU.stop(); // Play some background music
             MusicTrack.BACKGROUND.play(); // Play some background music
@@ -77,6 +76,8 @@ public class BomberQuestGame extends Game {
      */
     public BomberQuestGame(NativeFileChooser fileChooser) {
         this.fileChooser = fileChooser;
+
+
     }
 
     /**
@@ -167,6 +168,9 @@ public class BomberQuestGame extends Game {
      */
     public void goToMenu() {
         this.setScreen(new MenuScreen(this)); // Set the current screen to MenuScreen
+
+        if(currentGameScreen != null)
+        currentGameScreen.getTimer().setPause(true);
 
         MusicTrack.BACKGROUND.stop(); // Play some background music
         MusicTrack.BACKGROUND_MENU.play(); // Play some background music
