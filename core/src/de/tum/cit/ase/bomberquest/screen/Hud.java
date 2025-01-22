@@ -65,6 +65,8 @@ public class Hud {
         y -= 20;
         font.draw(spriteBatch, "Concurrent bomb limit: " + map.getPlayer().getBombLimit(), x, y);
         y -= 20;
+        font.draw(spriteBatch, "Defeated enemies: " + (map.getTotalEnemies() - map.getEnemies().size()), x, y);
+        y -= 20;
         font.draw(spriteBatch, "Remaining enemies: " + map.getEnemies().size(), x, y);
         y -= 20;
         font.draw(spriteBatch, "Exit unlocked: " + (map.getEnemies().size() == 0?"Yes":"No"), x, y);

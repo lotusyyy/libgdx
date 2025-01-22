@@ -11,7 +11,6 @@ import de.tum.cit.ase.bomberquest.texture.Textures;
 
 public class Bomb extends GameObject {
 
-    private int explosionRadius = 1;
     private float bombTimer = 3.0f;
     private final float explosionDuration = 0.5f;
     private float explosionTimer;
@@ -27,12 +26,16 @@ public class Bomb extends GameObject {
         return bombTimer;
     }
 
+    public GameMap getMap() {
+        return map;
+    }
+
     public Bomb(float x, float y, TextureRegion bombTexture, GameMap map, int explosionRadius) {
         super(x, y);
         this.map = map;
         this.bombTexture = Textures.BOMB;
         //this.explosionSound = Gdx.audio.newSound(Gdx.files.internal("bomb_explosion.mp3"));
-        this.explosionRadius = explosionRadius;
+
         this.exploded = false;
         player = map.getPlayer();
     }

@@ -62,7 +62,7 @@ public class GameMap {
     private Vector2 entrance;//Vector2是二维向量
     private Exit exit;
     private boolean exitRevealed = false;
-
+    private int totalEnemies;
     
     public GameMap(BomberQuestGame game, String mapFilePath) throws IOException {
         this.game = game;
@@ -146,7 +146,14 @@ public class GameMap {
             System.out.println("No Exit");
             addRandomExit();
         }
+
+        totalEnemies = enemies.size();
     }
+
+    public int getTotalEnemies() {
+        return totalEnemies;
+    }
+
     private void addRandomExit(){
         List<Vector2> destructibleWalls = new ArrayList<>();
         for (int y = 0; y < walls.length; y++) {
@@ -460,12 +467,6 @@ public class GameMap {
     public void updateEnemies(float delta) {
         for (Enemy enemy : enemies) {
             enemy.update(delta); // 假设 Enemy 类有 update 方法
-        }
-    }
-
-    public void renderBombs(SpriteBatch spriteBatch) {
-        for (Bomb bomb : bombs) {
-            bomb.render(spriteBatch); // 调用每个炸弹的 render 方法
         }
     }
 

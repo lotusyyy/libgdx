@@ -191,6 +191,8 @@ public class BomberQuestGame extends Game {
     public void goToVictoryAndGameOver(boolean won){
         this.setScreen(new VictoryAndGameOverScreen(this, won));
 
+        currentGameScreen = null;
+
         if(won){
             MusicTrack.WIN.play();
             MusicTrack.BACKGROUND.stop();

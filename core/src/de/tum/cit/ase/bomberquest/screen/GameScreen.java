@@ -15,14 +15,12 @@ import de.tum.cit.ase.bomberquest.BomberQuestGame;
 import de.tum.cit.ase.bomberquest.map.*;
 import de.tum.cit.ase.bomberquest.texture.Drawable;
 
-import java.awt.image.ImageProducer;
-
 /**
  * The GameScreen class is responsible for rendering the gameplay screen.
  * It handles the game logic and rendering of the game elements.
  */
 public class GameScreen implements Screen {
-    
+
     /**
      * The size of a grid cell in pixels.
      * This allows us to think of coordinates in terms of square grid tiles
@@ -30,7 +28,7 @@ public class GameScreen implements Screen {
      * rather than absolute pixel coordinates.
      */
     public static final int TILE_SIZE_PX = 16;
-    
+
     /**
      * The scale of the game.
      * This is used to make everything in the game look bigger or smaller.
@@ -54,7 +52,7 @@ public class GameScreen implements Screen {
      * @param game The main game class, used to access global resources and methods.
      */
     public GameScreen(BomberQuestGame game, GameMap map) {
-        this.world = new World(new Vector2(0,0), true);//无重力
+        this.world = new World(new Vector2(0, 0), true);//无重力
         this.game = game;
         this.spriteBatch = game.getSpriteBatch();
 
@@ -66,9 +64,10 @@ public class GameScreen implements Screen {
         Vector2 entrance = map.getEntrance();
         this.player = map.getPlayer();
     }
-    
+
     /**
      * The render method is called every frame to render the game.
+     *
      * @param deltaTime The time in seconds since the last render.
      */
     @Override
@@ -81,7 +80,7 @@ public class GameScreen implements Screen {
         spriteBatch.end();
 
         //计时结束，游戏失败
-        if(timer.isGameOver() && !isGameOver){
+        if (timer.isGameOver() && !isGameOver) {
             isGameOver = true;
             onGameOver();
         }
@@ -89,13 +88,13 @@ public class GameScreen implements Screen {
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             game.goToMenu();
         }
-        
+
         // Clear the previous frame from the screen, or else the picture smears
         ScreenUtils.clear(Color.BLACK);
-        
+
         // Cap frame time to 250ms to prevent spiral of death
         float frameTime = Math.min(deltaTime, 0.250f);
-        
+
         // Update the map state
         map.tick(frameTime);
 
@@ -107,12 +106,12 @@ public class GameScreen implements Screen {
 
         // Render the map on the screen
         renderMap();
-        
+
         // Render the HUD on the screen
         hud.render(player.getX(), player.getY());
 
     }
-    
+
     /**
      * Updates the camera to match the current state of the game.
      * Currently, this just centers the camera at the origin.
@@ -132,14 +131,14 @@ public class GameScreen implements Screen {
         mapCamera.position.y = Math.max(viewportHalfHeight, Math.min(playerY, map.getHeight() * TILE_SIZE_PX * SCALE - viewportHalfHeight));
         mapCamera.update(); // This is necessary to apply the changes
     }
-    
+
     private void renderMap() {
         // This configures the spriteBatch to use the camera's perspective when rendering
         spriteBatch.setProjectionMatrix(mapCamera.combined);
-        
+
         // Start drawing
         spriteBatch.begin();
-        
+
         // Render everything in the map here, in order from lowest to highest (later things appear on top)
         // You may want to add a method to GameMap to return all the drawables in the correct order
 
@@ -149,7 +148,7 @@ public class GameScreen implements Screen {
         }
 
         //powerups
-        for(PowerUp powerUp : map.getPowerUps()){
+        for (PowerUp powerUp : map.getPowerUps()) {
             draw(spriteBatch, powerUp);
         }
 
@@ -173,21 +172,23 @@ public class GameScreen implements Screen {
         for (Bomb bomb : map.getBombs()) {
             // System.out.println("Rendering bomb at: " + bomb.getX() + ", " + bomb.getY());
             //bomb.render(spriteBatch);
-            if(bomb.getExplosionTimer() < 0.8f)
-            draw2(spriteBatch, bomb);
-            else
+            if (bomb.getExplosionTimer() < 0.8f) {
+                draw2(spriteBatch, bomb);
+            } else {
                 draw(spriteBatch, bomb);
+            }
         }
 
         draw(spriteBatch, map.getPlayer());
         // Finish drawing, i.e. send the drawn items to the graphics card
         spriteBatch.end();
     }
-    
+
     /**
      * Draws this object on the screen.
      * The texture will be scaled by the game scale and the tile size.
      * This should only be called between spriteBatch.begin() and spriteBatch.end(), e.g. in the renderMap() method.
+     *
      * @param spriteBatch The SpriteBatch to draw with.
      */
     private static void draw(SpriteBatch spriteBatch, Drawable drawable) {
@@ -199,32 +200,51 @@ public class GameScreen implements Screen {
         float width = texture.getRegionWidth() * SCALE;
         float height = texture.getRegionHeight() * SCALE;
 
-        if(drawable instanceof  Player){
+        if (drawable instanceof Player) {
             width = 8 * SCALE;
             height = 13 * SCALE;
         }
         spriteBatch.draw(texture, x, y, width, height);
     }
 
-    private static void draw2(SpriteBatch spriteBatch, Drawable drawable) {
-        TextureRegion texture = drawable.getCurrentAppearance();
+    private static void draw2(SpriteBatch spriteBatch, Bomb bomb) {
+        int radius = bomb.getMap().getPlayer().getBlastRadius();
+
+        TextureRegion texture = bomb.getCurrentAppearance();
+        float x = bomb.getX() * TILE_SIZE_PX * SCALE;
+        float y = bomb.getY() * TILE_SIZE_PX * SCALE;
+
+        TextureRegion center = new TextureRegion(texture, 32, 32, 16, 16);
+        spriteBatch.draw(center, x, y, 64, 64);
+
+        for (int i = 0; i < radius; i++) {
+            TextureRegion top = new TextureRegion(texture, 32, 16, 16, 16);
+            spriteBatch.draw(top, x, y + 64 * i + 64, 64, 64);
+
+            TextureRegion down = new TextureRegion(texture, 32, 48, 16, 16);
+            spriteBatch.draw(down, x, y - 64 * i - 64, 64, 64);
+
+            TextureRegion left = new TextureRegion(texture, 16, 32, 16, 16);
+            spriteBatch.draw(left, x- 64 * i - 64, y  , 64, 64);
+
+            TextureRegion right = new TextureRegion(texture, 48, 32, 16, 16);
+            spriteBatch.draw(right, x+ 64 * i + 64, y  , 64, 64);
+
+        }
+
         // Drawable coordinates are in tiles, so we need to scale them to pixels
-        float x = drawable.getX() * TILE_SIZE_PX * SCALE - 64 *2.0f;
-        float y = drawable.getY() * TILE_SIZE_PX * SCALE - 64 *2.0f;
+        x = bomb.getX() * TILE_SIZE_PX * SCALE - 64 * 2.0f;
+        y = bomb.getY() * TILE_SIZE_PX * SCALE - 64 * 2.0f;
         // Additionally scale everything by the game scale
         float width = texture.getRegionWidth() * SCALE;
         float height = texture.getRegionHeight() * SCALE;
 
-        if(drawable instanceof  Player){
-            width = 8 * SCALE;
-            height = 13 * SCALE;
-        }
-        spriteBatch.draw(texture, x, y, width, height);
+
     }
 
 
     //更新游戏逻辑
-    private void updateGameLogic(float deltaTime){
+    private void updateGameLogic(float deltaTime) {
         //eg:玩家移动，炸弹爆炸
         player.tick(deltaTime);
         player.handleInput();
@@ -237,13 +257,13 @@ public class GameScreen implements Screen {
         }
     }
 
-    private void drawHUD(){
+    private void drawHUD() {
         //绘制剩余时间
         BitmapFont font = new BitmapFont();
-       // font.draw(spriteBatch, "Time left: " +(int)timer.getTimeLeft() + " second(s)", player.getX(), player.getY()+ 30);
+        // font.draw(spriteBatch, "Time left: " +(int)timer.getTimeLeft() + " second(s)", player.getX(), player.getY()+ 30);
     }
 
-    private void onGameOver(){
+    private void onGameOver() {
         System.out.println("Time out, game failed! ");
         //切换到游戏失败界面or主页面
         game.goToVictoryAndGameOver(false);
@@ -252,7 +272,8 @@ public class GameScreen implements Screen {
     /**
      * Called when the window is resized.
      * This is where the camera is updated to match the new window size.
-     * @param width The new window width.
+     *
+     * @param width  The new window width.
      * @param height The new window height.
      */
     @Override
