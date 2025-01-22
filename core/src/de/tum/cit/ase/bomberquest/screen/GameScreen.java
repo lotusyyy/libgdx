@@ -64,7 +64,7 @@ public class GameScreen implements Screen {
         Vector2 entrance = map.getEntrance();
         this.player = map.getPlayer();
 
-        timer = new CountdownTimer(300);//初始化计时器，300s
+        timer = new CountdownTimer(300, game);//初始化计时器，300s
         timer.start();
     }
 

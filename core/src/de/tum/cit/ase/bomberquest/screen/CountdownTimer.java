@@ -10,17 +10,9 @@ public class CountdownTimer {
     private boolean isGameOver = false;
     private boolean pause;
 
-    public CountdownTimer(float initialTime) {
+    public CountdownTimer(float initialTime, BomberQuestGame game) {
         this.timeLeft = initialTime;
-    }
-
-    public CountdownTimer(float timeLeft, Timer.Task timerTask, boolean isGameOver) {
-        this.timeLeft = timeLeft;
-        this.timerTask = timerTask;
-        this.isGameOver = isGameOver;
-    }
-
-    public CountdownTimer() {
+        this.game = game;
     }
 
     public void setPause(boolean pause) {
