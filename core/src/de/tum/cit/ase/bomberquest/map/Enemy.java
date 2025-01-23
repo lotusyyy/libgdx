@@ -59,6 +59,8 @@ public class Enemy extends GameObject {
             // 应用速度向量更新物理体位置
             hitbox.setLinearVelocity(velocity);
         }else {
+
+            hitbox.setLinearVelocity(0, 0);
             randomVelocity();
         }
     }
